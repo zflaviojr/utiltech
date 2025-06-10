@@ -1,0 +1,281 @@
+:root {
+    --primary-color: #4f46e5;
+    --secondary-color: #10b981;
+  }
+  body {
+    transition: background-color .3s, color .3s;
+  }
+  header {
+    height: 5rem;
+  }
+  
+  /* Dark-mode toggle */
+  .dark-mode-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  .dark-mode-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .dark-mode-slider {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #ccc;
+    border-radius: 24px;
+    transition: .4s;
+  }
+  .dark-mode-slider:before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background: #fff;
+    border-radius: 50%;
+    transition: .4s;
+  }
+  input:checked + .dark-mode-slider {
+    background: var(--secondary-color);
+  }
+  input:checked + .dark-mode-slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Tool containers */
+  .tool-container {
+    transition: opacity .3s, height .3s;
+  }
+  .tool-container.hidden {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  .tool-container:not(.hidden) {
+    opacity: 1;
+    height: auto;
+  }
+  
+  /* Ad container */
+  .ad-container {
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 2px dashed #d1d5db;
+    padding: 1rem;
+    border-radius: .5rem;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  .dark .ad-container {
+    background: #374151;
+    color: #9ca3af;
+    border-color: #4b5563;
+  }
+  
+/* Banners Verticais */
+.vertical-banner {
+  position: sticky;
+  top: 0;
+  height: 100vh;       /* ocupa toda a altura visível */
+  display: none;       /* escondido por padrão */
+}
+@media (min-width: 1024px) {
+  .vertical-banner {
+    display: flex;     /* mostra em telas maiores */
+    align-items: center;
+    justify-content: center;
+  }
+}
+  
+  /* Cards de resultado — cores mais saturadas */
+#bioimpedance-calculator-container .bg-blue-50 { background-color: #E0F2FE; }   /* azul claro */
+.dark #bioimpedance-calculator-container .bg-blue-900 { background-color: #1E3A8A; } /* azul escuro */
+
+#bioimpedance-calculator-container .bg-green-50 { background-color: #D1FAE5; }  /* verde claro */
+.dark #bioimpedance-calculator-container .bg-green-900 { background-color: #047857; } /* verde escuro */
+
+#bioimpedance-calculator-container .bg-purple-50 { background-color: #EDE9FE; } /* roxo claro */
+.dark #bioimpedance-calculator-container .bg-purple-900 { background-color: #5B21B6; } /* roxo escuro */
+
+#bioimpedance-calculator-container .bg-yellow-50 { background-color: #FEF9C3; } /* amarelo claro */
+.dark #bioimpedance-calculator-container .bg-yellow-900 { background-color: #78350F; } /* marrom escuro */
+
+#bioimpedance-calculator-container .bg-red-50 { background-color: #FEE2E2; }    /* vermelho claro */
+.dark #bioimpedance-calculator-container .bg-red-900 { background-color: #991B1B; }   /* vermelho escuro */
+
+#bioimpedance-calculator-container .bg-indigo-50 { background-color: #E0E7FF; } /* índigo claro */
+.dark #bioimpedance-calculator-container .bg-indigo-900 { background-color: #3730A3; } /* índigo escuro */
+
+/* Barra de distribuição — cores fortes */
+#dist-fat    { background-color: #FBBF24 !important; } /* amarelo-500 */
+#dist-muscle { background-color: #3B82F6 !important; } /* azul-500 */
+#dist-water  { background-color: #06B6D4 !important; } /* teal-500 */
+#dist-bone   { background-color: #4B5563 !important; } /* gray-600 */
+
+/* Fundo da barra de distribuição */
+#bioimpedance-calculator-container .bg-gray-200 {
+  background-color: #F3F4F6; /* cinza claro no modo claro */
+}
+.dark #bioimpedance-calculator-container .bg-gray-700 {
+  background-color: #1F2937; /* cinza escuro no modo noturno */
+}
+
+/* Segments da progress bar — cores idênticas ao mockup */
+#dist-fat {
+  background-color: #FBBF24 !important;   /* amarelo */
+}
+#dist-muscle {
+  background-color: #3B82F6 !important;   /* azul */
+}
+#dist-water {
+  background-color: #06B6D4 !important;   /* ciano */
+}
+#dist-bone {
+  background-color: #4B5563 !important;   /* cinza escuro */
+}
+
+/* Suaviza as bordas dos segmentos */
+#bioimpedance-calculator-container .rounded-full div {
+  border-radius: 2px;
+}
+
+
+
+/* ─── Números principais: cores vivas ─── */
+#bmi-result           { color: #3B82F6; }  /* azul */
+#fat-percent-result   { color: #047857; }  /* verde */
+#lean-percent-result  { color: #7C3AED; }  /* roxo */
+#water-percent-result { color: #D97706; }  /* laranja */
+#bone-percent-result  { color: #B91C1C; }  /* vermelho */
+#bmr-result           { color: #6366F1; }  /* índigo */
+
+/* Garante que o número não fique esmaecido */
+.dark #bioimpedance-calculator-container h3 {
+  font-weight: 700;
+}
+
+/* ─── CONTRASTE E CORES DOS TEXTOS NOS CARDS ─── */
+
+/* == FORÇA TOTAL: CONTRASTE NO MODO CLARO == */
+#bioimpedance-calculator-container > div > .grid .p-4 {
+  /* Texto geral (títulos, legendas e valores) */
+  color: #3a4758 !important; /* cinza-900 */
+}
+#bioimpedance-calculator-container span.block.text-sm {
+  color: #374151 !important; /* cinza-700 para rótulos */
+}
+#bioimpedance-calculator-container span.text-xs {
+  color: #4B5563 !important; /* cinza-600 para legendas */
+}
+/* Garante negrito nos valores */
+#bioimpedance-calculator-container h3 {
+  font-weight: 700 !important;
+}
+
+/* == FORÇA TOTAL: CONTRASTE NO MODO ESCURO == */
+.dark #bioimpedance-calculator-container > div > .grid .p-4 {
+  color: #3B82F6 !important;    /* quase branco */
+}
+.dark #bioimpedance-calculator-container span.block.text-sm {
+  color: #3B82F6 !important;    /* cinza-claro */
+}
+.dark #bioimpedance-calculator-container span.text-xs {
+  color: #3B82F6 !important;    /* cinza-médio */
+}
+.dark #bioimpedance-calculator-container h3 {
+  /* valores coloridos você já ajustou antes, aqui só reforça o peso */
+  font-weight: 700 !important;
+}
+
+/* === Lista de Tarefas === */
+#todo-container input {
+  border: 1px solid #d1d5db;
+}
+#todo-container li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  background: #f9fafb;
+}
+.dark #todo-container li {
+  background: #1f2937;
+}
+#todo-container li.completed label {
+  text-decoration: line-through;
+  opacity: .6;
+}
+#todo-container li button {
+  color: #ef4444;
+}
+
+
+/* === Gerador de CPF === */
+#cpf-generator-container input {
+  border: 1px solid #d1d5db;
+}
+.dark #cpf-generator-container input {
+  background: #1f2937;
+  color: #e5e7eb;
+}
+#cpf-generator-container button {
+  transition: opacity .3s;
+}
+
+/* === Lista de Compras === */
+#shopping-container input[type="text"],
+#shopping-container input[type="number"] {
+  border: 1px solid #d1d5db;
+}
+#shopping-container button {
+  transition: opacity .3s;
+}
+#shopping-container ul li {
+  list-style: none;
+}
+#shopping-container .shop-checkbox {
+  accent-color: var(--primary-color);
+}
+
+/* Espaçamento e campos editáveis */
+#shopping-container li {
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+#shopping-container li span,
+#shopping-container li input[type='number'] {
+  min-width: 60px;
+  text-align: left;
+}
+#shopping-container li input[type='number'] {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  padding: 2px 6px;
+  width: 70px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Valor total com destaque */
+#shopping-total {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #10b981; /* verde destaque */
+}
+
+/* Inputs no modo escuro */
+.dark #shopping-container input[type='number'] {
+  background-color: #374151;
+  color: #f3f4f6;
+  border: 1px solid #4b5563;
+}
+

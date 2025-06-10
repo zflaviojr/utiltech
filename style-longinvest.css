@@ -1,0 +1,539 @@
+/* Importa a fonte Roboto do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Reset básico */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+  Variáveis de cor em :root
+  Incluindo --color-primary-rgb para uso no Chart.js
+*/
+:root {
+    --color-primary: #FFC300;
+    --color-primary-rgb: 255, 195, 0; /* Cor primária em formato RGB (padrão) */
+    --color-secundary: #f5bc01;
+    --color-secundary-line: #8e44ad;
+    --color-bg: #f2f2f2;
+    --color-text-header: #fff;
+    --color-text-main: #333;
+    --color-card-bg: #fff;
+    --color-card-text: #333;
+    --color-input-border: #ccc;
+    --color-input-focus: #FFC300;
+    --color-footer-bg: #fff;
+    --color-footer-text: #777;
+    --color-footer-hover: #FFC300;
+    
+    /* Variáveis para degradê do Card 1 */
+    --card-bg-gradient-start: #FFC300; /* degradê do tema default */
+    --card-bg-gradient-end: #fff;
+
+    /* Degradê específico para Barras no tema default */
+    --bar-bg-gradient-start: #FFC300; 
+    --bar-bg-gradient-end: #fff;
+}
+
+/* Tema padrão (amarelo) */
+.theme-default {
+    --color-primary: #FFC300;
+    --color-primary-rgb: 255, 195, 0;
+    --color-secundary: #f5bc01;
+    --color-secundary-line: #8e44ad;
+    --color-bg: #f2f2f2;
+    --color-text-header: #fff;
+    --color-text-main: #333;
+    --color-card-bg: #fff;
+    --color-card-text: #333;
+    --color-input-border: #ccc;
+    --color-input-focus: #FFC300;
+    --color-footer-bg: #fff;
+    --color-footer-text: #777;
+    --color-footer-hover: #FFC300;
+    
+    /* Degradê específico para Card 1 no tema default */
+    --card-bg-gradient-start: #ffffff; 
+    --card-bg-gradient-end: #fff;
+
+    /* Degradê específico para Barras no tema default */
+    --bar-bg-gradient-start: #FFC300; 
+    --bar-bg-gradient-end: #fff;
+}
+
+/* Tema violeta (inspirado na imagem) */
+.theme-violet {
+    --color-primary: #7269ef;
+    --color-primary-rgb: 114, 105, 239; /* Cor primária em formato RGB */
+    --color-secundary: #4940c7e1;
+    --color-secundary-line: #8e44ad;
+    --color-bg: #f8f9fd;
+    --color-text-header: #fff;
+    --color-text-main: #333;
+    --color-card-bg: #fff;
+    --color-card-text: #333;
+    --color-input-border: #ccc;
+    --color-input-focus: #7269ef;
+    --color-footer-bg: #fff;
+    --color-footer-text: #888;
+    --color-footer-hover: #7269ef;
+    
+    /* Degradê específico para Card 1 no tema violeta */
+    --card-bg-gradient-start: #ffffff;
+    --card-bg-gradient-end: #fff;
+
+    /* Degradê específico para Barras no tema violeta */
+    --bar-bg-gradient-start: #7269ef; 
+    --bar-bg-gradient-end: #fff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background-color: var(--color-bg);
+}
+
+/* Cabeçalho fixo, simulando um app */
+.app-header {
+    /* Degradê com transparência para o texto branco ficar mais visível */
+    background: linear-gradient(
+        180deg,
+        rgba(var(--color-primary-rgb), 1.0) 60%,
+        rgba(var(--color-primary-rgb), 0.9) 100%
+    );
+    color: var(--color-text-header);
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    /* Curva no canto inferior direito */
+    border-bottom-right-radius: 25px;
+}
+
+/* Aplica a nova fonte nos títulos do cabeçalho */
+.app-header h1,
+.app-header h3 {
+    font-family: 'Roboto', sans-serif;
+    margin: 0; /* Para garantir que não haja deslocamento */
+}
+
+.app-header h1 {
+    font-weight: 600;
+}
+
+.app-header h3 {
+    font-weight: 500; /* um pouco mais forte que 250 para melhor legibilidade */
+}
+
+/* Botão de voltar em formato de seta circular */
+.app-header .button-back {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    line-height: 35px; /* para alinhar o ícone verticalmente */
+    text-align: center;
+    outline: none; /* remove o contorno no foco */
+}
+
+.app-header .button-back:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Container geral (como se fosse a "tela" do app) */
+.app-container {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 80px 20px 20px;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+}
+
+/* Card para o conteúdo principal */
+.card {
+    background-color: var(--color-card-bg);
+    color: var(--color-card-text);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    text-align: center;
+    color: var(--color-text-main);
+    margin-bottom: 20px;
+}
+
+/* Estilização do formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+}
+
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-input-border);
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+input[type="number"]:focus,
+select:focus {
+    border-color: var(--color-input-focus);
+}
+
+/* Botão de calcular (mantemos o estilo só para input[type="submit"]) */
+input[type="submit"] {
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+input[type="submit"]:hover {
+    filter: brightness(0.9);
+}
+
+/* Seção de resultado */
+.result {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--color-text-main);
+}
+
+.result span {
+    display: block;
+    margin: 8px 0;
+}
+
+/* Rodapé fixo para simular barra inferior de app */
+.app-footer {
+    background-color: var(--color-footer-bg);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 420px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.app-footer button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--color-footer-text);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.app-footer button:hover {
+    color: var(--color-footer-hover);
+}
+
+.app-container .card:first-child {
+    background: linear-gradient(135deg, var(--card-bg-gradient-start) 0%, var(--card-bg-gradient-end) 100%) !important;
+}
+
+
+/* --------------------------------------------
+   Estilos ajustados para o Card de Valor Acumulado
+   -------------------------------------------- */
+   .accumulated-value-card {
+    background: linear-gradient(90deg, var(--color-primary, #8e44ad), var(--color-primary-light, #9b59b6));
+    border-radius: 12px;
+    box-shadow: 0px 5px 5px rgba(0,0,0,0.2);
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .accumulated-value-card h2.accumulated-title {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--color-text-light, #ffffff) !important;
+  }
+      
+  .accumulated-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .accumulated-value-amount {
+    font-size: 2rem; /* Destaque */
+    font-weight: bold;
+    color: var(--color-secundary) !important;
+    text-shadow: 0 1px 2px rgba(102, 102, 102, 0.25);
+  }
+  
+  
+  .accumulated-variation {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .accumulated-percent,
+  .accumulated-diff {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-light, #ffffff);
+  }
+    
+
+
+/* Ajuste para centralizar o título do card de Resultados */
+.card.results-card h2 {
+    text-align: center;
+    background: linear-gradient(135deg, var(--card-bg-gradient-start) 0%, var(--card-bg-gradient-end) 100%) !important;
+}
+
+.result-bar {
+    height: 30px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, var(--bar-bg-gradient-start), var(--bar-bg-gradient-end));
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    margin: 10px 0;
+    color: var(--color-text-main);
+    font-weight: 100;
+}
+
+.result-bar span {
+    margin-left: auto;
+}
+
+/* Container do gráfico */
+.chart-container {
+    position: relative;
+    margin: 0 auto;
+    height: 300px;
+    width: 100%;
+}
+
+/* Estilos para os resultados */
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.result-item {
+    background: linear-gradient(90deg, var(--color-primary, #8e44ad), var(--color-primary-light, #9b59b6));
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 5px 5px rgba(0,0,0,0.2);
+    height: 100px;
+    width: 100%;
+}
+
+/* Ícone à esquerda */
+.result-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    flex-shrink: 0;
+}
+
+/* Texto do Card 3 */
+.result-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.result-info h4 {
+    font-size: 0.80rem;
+    color: var(--color-text-light, #ffffff);
+    margin-bottom: 5px;
+}
+
+.result-info p {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 90%;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* Valor */
+.result-amount {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: var(--color-text-light, #ffffff);
+    margin-left: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Estilos para o Card de Resultados Periódicos */
+.periodic-results-card {
+    margin-top: 20px;
+}
+
+.periodic-results-card h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Cabeçalho com títulos das colunas */
+.periodic-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: rgba(var(--color-primary-rgb), 0.2);
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.periodic-result-header div {
+    flex: 1;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--color-text-main);
+}
+
+/* Estilização dos itens de resultados periódicos */
+.periodic-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: rgba(var(--color-primary-rgb), 0.1);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+.period-label, 
+.period-value, 
+.period-contribution, 
+.period-percentage {
+    flex: 1;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-main);
+}
+
+.periodic-result-item:last-child {
+    margin-bottom: 0;
+}
+
+
+.floating-scroll-button {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background-color: rgba(var(--color-primary-rgb, 0, 123, 255), 0.6);
+      color: #fff;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
+    .floating-scroll-button.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #scrollDownBtn {
+      bottom: 90px;
+    }
+    #scrollUpBtn {
+      top: 90px;
+    }
+
+
+    .compare-container {
+        text-align: center;
+        margin-top: 15px; /* Espaçamento acima do botão, separando-o do gráfico */
+      }
+      
+      button.compare-btn {
+        background-color: var(--color-primary);
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: filter 0.3s ease;
+      }
+      
+      /* Efeito hover para o botão */
+      button.compare-btn:hover {
+        filter: brightness(0.9);
+      }
+      

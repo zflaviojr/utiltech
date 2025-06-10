@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LongInvest - Resultados</title>
+  <link rel="stylesheet" href="style-longinvest.css">
+  <script>
+    // Aplica o tema salvo ao carregar a página
+    document.documentElement.className = localStorage.getItem('theme') || 'theme-default';
+  </script>
+</head>
+<body>
+
+  <!-- Cabeçalho com botão de voltar -->
+  <div class="app-header">
+    <button class="button-back" id="btnBack">❮</button>
+    <h3>Resultados</h3>
+  </div>
+
+  <div class="app-container">
+    <!-- Card 1: Parâmetros da Simulação -->
+    <div class="card">
+      <h2>Parâmetros da Simulação</h2>
+      <div id="summary"></div>
+    </div>
+
+    <!-- NOVO CARD: Valor Acumulado -->
+    <div class="card accumulated-value-card">
+      <h2 class="accumulated-title">Valor Acumulado</h2>
+      <div class="accumulated-info">
+        <div id="accumulatedValue" class="accumulated-value-amount">--</div>
+        <div class="accumulated-variation">
+          <span id="accumulatedPercent" class="accumulated-percent">--</span>
+          <span id="accumulatedDiff" class="accumulated-diff">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Evolução da Carteira (Gráfico) -->
+    <div class="card">
+      <h2>Evolução da Carteira</h2>
+      <div class="chart-container">
+        <canvas id="portfolioChart"></canvas>
+      </div>
+      <!-- Novo contêiner para botão de comparação -->
+      <div class="compare-container">
+        <button id="compareBtn" class="compare-btn">Comparar</button>
+        <br>
+        <br>
+        <select id="compareSelect" style="display: none;"></select>
+      </div>
+    </div>
+
+    <!-- Card 3: Resultados -->
+    <div class="card results-card">
+      <h2>Resultados</h2>
+      <div class="results-list" id="resultList"></div>
+    </div>
+
+    <!-- Card 4: Resultados Periódicos -->
+    <div class="card periodic-results-card">
+      <h2>Resultados Periódicos</h2>
+      <div class="results-list" id="periodicResultList"></div>
+    </div>
+  </div>
+
+  <!-- Barra inferior fixa -->
+  <div class="app-footer">
+    <button>Home</button>
+    <button>Histórico</button>
+    <button>Perfil</button>
+  </div>
+
+  <!-- Botões de rolagem flutuantes -->
+  <button id="scrollDownBtn" class="floating-scroll-button">↓</button>
+  <button id="scrollUpBtn" class="floating-scroll-button">↑</button>
+
+  <!-- Carrega Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Botão de voltar
+    document.getElementById('btnBack').addEventListener('click', () => {
+      window.history.back();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (localStorage.getItem('showFooter') === 'false') {
+        document.querySelector('.app-footer').style.display = 'none';
+      }
+    });
+
+    // Recupera os dados do localStorage
+    const storedData = localStorage.getItem('investmentData');
+    if (storedData) {
+      const data = JSON.parse(storedData);
+
+      const summaryEl = document.getElementById('summary');
+      const aporteFriendly = data.investmentTypeFriendly;
+
+      summaryEl.innerHTML = `
+        <p><strong>Investimento Inicial:</strong> R$ ${data.initialInvestment.toLocaleString('pt-BR')}</p>
+        <p><strong>Tipo de Aporte:</strong> ${aporteFriendly}</p>
+        <p><strong>Valor do Aporte:</strong> R$ ${data.investmentValue.toLocaleString('pt-BR')}</p>
+        <p><strong>Período (meses):</strong> ${data.investmentPeriod}</p>
+        <p><strong>Ativo:</strong> ${data.assetFriendly}</p>
+      `;
+
+      // ---------------------------------------------------
+      // NOVO: Atualiza o Card de Valor Acumulado
+      // ---------------------------------------------------
+      const accumulatedValueEl = document.getElementById('accumulatedValue');
+      const accumulatedPercentEl = document.getElementById('accumulatedPercent');
+      const accumulatedDiffEl = document.getElementById('accumulatedDiff');
+
+      // Valor acumulado
+      const formatCurrency = (value) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      const formatPercentage = (value) => value.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }) + '%';
+
+      accumulatedValueEl.textContent = formatCurrency(data.totalInvestment);
+
+      // Diferença em R$ (entre o total acumulado e o total aportado)
+      const difference = data.totalInvestment - data.totalContributions;
+      // Ganho percentual (sobre total aportado)
+      const pct = data.gainPercentage; // já vem em formato decimal, ex: 3.28
+
+      // Sinal (+ ou -)
+      const sign = difference >= 0 ? '+' : '-';
+      const signPct = pct >= 0 ? '+' : '-';
+
+      accumulatedPercentEl.textContent = `${signPct}${formatPercentage(Math.abs(pct))}`;
+      accumulatedDiffEl.textContent = `${sign}${formatCurrency(Math.abs(difference))}`;
+
+      // ---------------------------------------------------
+      // Renderiza o Card de Resultados (removendo "Valor Acumulado" dele)
+      // ---------------------------------------------------
+      const resultList = document.getElementById('resultList');
+
+      // A lista agora começa a partir de "Valor Total Aportado" (removemos "Valor Acumulado")
+      const resultados = [
+        // REMOVIDO: Valor Acumulado
+        { label: "Valor Total Aportado", value: data.totalContributions, formatted: formatCurrency(data.totalContributions) },
+        { label: "Ganho (sobre total aportado)", value: data.gainPercentage, formatted: formatPercentage(data.gainPercentage) },
+        { label: "Ganho (sobre valor inicial)", value: data.gainInitialPercentage, formatted: formatPercentage(data.gainInitialPercentage) }
+      ];
+
+      const arrowClass = (value) => value >= 0 ? "↑" : "↓";
+
+      resultList.innerHTML = resultados.map(res => `
+        <div class="result-item">
+          <div class="result-icon">${arrowClass(res.value)}</div>
+          <div class="result-info">
+            <h4>${res.label}</h4>
+            <p>Resultado Calculado</p>
+          </div>
+          <div class="result-amount">${res.formatted}</div>
+        </div>
+      `).join('');
+
+      // ---------------------------------------------------
+      // Geração do gráfico (SEM ALTERAÇÕES)
+      // ---------------------------------------------------
+      let totalPeriods, periodicRate;
+      const investmentType = data.investmentType;
+      const assetRates = data.assetRates ? data.assetRates : {
+        bitcoin: 0.0322,
+        dolar: 0.0048,
+        sp500: 0.0125,
+        nasdaq: 0.0152,
+        coke: 0.0317,
+        brk_a: 0.0145,
+        bovespa: 0.0085,
+        tesouro_selic: 0.0072,
+        poupanca_br: 0.00533,
+      };
+      const rate = assetRates[data.investmentAsset] || 0;
+      const investmentPeriod = data.investmentPeriod;
+      const investmentValue = data.investmentValue;
+      const initialInvestment = data.initialInvestment;
+
+      if (investmentType === 'daily') {
+        totalPeriods = investmentPeriod * 30;
+        periodicRate = Math.pow(1 + rate, 1/30) - 1;
+      } else if (investmentType === 'monthly') {
+        totalPeriods = investmentPeriod;
+        periodicRate = rate;
+      } else if (investmentType === 'annual') {
+        totalPeriods = investmentPeriod / 12;
+        periodicRate = Math.pow(1 + rate, 12) - 1;
+      }
+
+      const portfolioValues = [];
+      const labels = [];
+      let currentValue = initialInvestment;
+      portfolioValues.push(currentValue);
+      labels.push("0");
+
+      for (let i = 1; i <= totalPeriods; i++) {
+        currentValue = currentValue * (1 + periodicRate) + investmentValue;
+        portfolioValues.push(currentValue);
+        labels.push(i.toString());
+      }
+
+      const rootStyles = getComputedStyle(document.documentElement);
+      const primaryRGB = rootStyles.getPropertyValue('--color-primary-rgb').trim();
+
+      const ctx = document.getElementById('portfolioChart').getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient.addColorStop(0, `rgba(${primaryRGB}, 0.5)`);
+      gradient.addColorStop(1, `rgba(${primaryRGB}, 0)`);
+
+      portfolioChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Valor da Carteira (R$)',
+            data: portfolioValues,
+            borderColor: `rgba(${primaryRGB}, 1)`,
+            backgroundColor: gradient,
+            fill: true,
+            tension: 0.4,
+            borderWidth: 2,
+            pointRadius: 2,
+            pointHoverRadius: 4,
+            pointBackgroundColor: `rgba(${primaryRGB}, 1)`,
+            pointHoverBackgroundColor: `rgba(${primaryRGB}, 0.8)`
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              onClick: null,
+              labels: {
+                font: { size: 14 },
+                color: 'var(--color-text-main)'
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Período (meses)',
+                font: { size: 14 },
+                color: 'var(--color-text-main)'
+              },
+              ticks: {
+                display: true,
+                font: { size: 12 },
+                color: 'var(--color-text-main)'
+              },
+              grid: {
+                display: false,
+                drawBorder: false
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Valor (R$)',
+                font: { size: 14 },
+                color: 'var(--color-text-main)'
+              },
+              ticks: {
+                display: true,
+                font: { size: 12 },
+                color: 'var(--color-text-main)',
+                callback: function(value) {
+                  return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                }
+              },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+
+      // Obter elementos do botão e do select
+      const compareBtn = document.getElementById('compareBtn');
+      const compareSelect = document.getElementById('compareSelect');
+
+      // Mapeamento de nomes amigáveis para cada ativo (conforme index.html)
+      const assetFriendlyNames = {
+        bitcoin: "Bitcoin",
+        dolar: "Dólar",
+        sp500: "Índice S&P500",
+        nasdaq: "Índice NASDAQ",
+        coke: "Coca-cola (COKE) NASDAQ",
+        brk_a: "Berkshire Hathaway-A",
+        bovespa: "Índice Bovespa",
+        tesouro_selic: "Tesouro SELIC",
+        poupanca_br: "Poupança Brasileira"
+      };
+
+      // Ao clicar em "Comparar", exibe o combobox com opções de ativos
+      compareBtn.addEventListener('click', () => {
+        // Preenche o select com ativos, excluindo o ativo atual da simulação
+        const currentAsset = data.investmentAsset;  // ativo da simulação atual
+        compareSelect.innerHTML = "<option disabled selected>Selecione um ativo...</option>";
+        for (const assetKey in assetRates) {
+          if (assetKey !== currentAsset) {
+            const option = document.createElement('option');
+            option.value = assetKey;
+            option.textContent = assetFriendlyNames[assetKey] || assetKey;
+            compareSelect.appendChild(option);
+          }
+        }
+        compareSelect.style.display = 'block';  // torna o combobox visível
+      });
+
+  compareSelect.addEventListener('change', (event) => {
+      const selectedAsset = event.target.value;
+      const selectedFriendly = assetFriendlyNames[selectedAsset] || selectedAsset;
+
+      // Recupera os parâmetros da simulação atual (já presentes em data)
+      const initialInvestment = data.initialInvestment;
+      const investmentType = data.investmentType;
+      const investmentPeriod = data.investmentPeriod;
+      const investmentValue = data.investmentValue;
+
+      // Obtém a taxa do novo ativo selecionado
+      const newRate = assetRates[selectedAsset] || 0;
+
+      // Recalcula total de períodos e taxa periódica usando o mesmo tipo de aporte
+      let compTotalPeriods, compPeriodicRate;
+      if (investmentType === 'daily') {
+        compTotalPeriods = investmentPeriod * 30;
+        compPeriodicRate = Math.pow(1 + newRate, 1/30) - 1;
+      } else if (investmentType === 'monthly') {
+        compTotalPeriods = investmentPeriod;
+        compPeriodicRate = newRate;
+      } else if (investmentType === 'annual') {
+        compTotalPeriods = investmentPeriod / 12;
+        compPeriodicRate = Math.pow(1 + newRate, 12) - 1;
+      }
+
+      // Calcula a evolução do valor da carteira para o novo ativo
+      const compPortfolioValues = [];
+      let currentValue = initialInvestment;
+      compPortfolioValues.push(currentValue);
+      for (let i = 1; i <= compTotalPeriods; i++) {
+        currentValue = currentValue * (1 + compPeriodicRate) + investmentValue;
+        compPortfolioValues.push(currentValue);
+      }
+
+      // (Os valores acumulados para o ativo comparativo agora estão em compPortfolioValues)
+      // Em seguida, adicionaremos esses valores como uma nova série no gráfico...
+
+      // Obter cores do tema para diferenciar as linhas
+      const rootStyles = getComputedStyle(document.documentElement);
+      const secondaryColorHex = rootStyles.getPropertyValue('--color-secundary-line').trim(); // ex: "#f5bc01"
+      // Converter HEX secundário para valores RGB
+      let secondaryRGB = "255,255,255";
+      if (secondaryColorHex.startsWith("#")) {
+        const hex = secondaryColorHex.slice(1);
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        secondaryRGB = `${r}, ${g}, ${b}`;
+      }
+
+      // Criar um gradiente para a nova linha (semelhante ao gradiente primário)
+      const ctx = document.getElementById('portfolioChart').getContext('2d');
+      const gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
+      gradient2.addColorStop(0, `rgba(${secondaryRGB}, 0.5)`);  // cor secundária semi-transparente no topo
+      gradient2.addColorStop(1, `rgba(${secondaryRGB}, 0)`);    // transparente embaixo
+
+      // Montar novo dataset para o gráfico
+      const newDataset = {
+        label: selectedFriendly,                  // nome do ativo comparado no rótulo da legenda
+        data: compPortfolioValues,               // valores calculados da carteira para o novo ativo
+        borderColor: `rgba(${secondaryRGB}, 1)`,  // cor da linha usando a cor secundária
+        backgroundColor: gradient2,              // preenchimento com gradiente da cor secundária
+        fill: true,
+        tension: 0.4,
+        borderWidth: 2,
+        pointRadius: 2,
+        pointBackgroundColor: `rgba(${secondaryRGB}, 1)`,
+        pointHoverRadius: 4,
+        pointHoverBackgroundColor: `rgba(${secondaryRGB}, 0.8)`
+      };
+
+      // Adicionar o novo dataset ao gráfico existente e atualizar
+      if (portfolioChart.data.datasets.length > 1) {
+        // Se já existe uma linha de comparação, substitui pela nova
+        portfolioChart.data.datasets[1] = newDataset;
+      } else {
+        // Caso contrário, adiciona a nova linha como segundo dataset
+        portfolioChart.data.datasets.push(newDataset);
+      }
+      portfolioChart.update();
+
+    });
+
+
+
+      // ---------------------------------------------------
+      // Card 4: Resultados Periódicos (SEM ALTERAÇÕES)
+      // ---------------------------------------------------
+      const periodicResultList = document.getElementById('periodicResultList');
+
+      let headerHtml = `
+        <div class="periodic-result-header">
+          <div class="period-header-label">Período</div>
+          <div class="period-header-value">Valor Acumulado</div>
+          <div class="period-header-percentage">Percentual</div>
+        </div>
+      `;
+      let periodicResultsHtml = '';
+
+      if (data.investmentPeriod < 12) {
+        let cumulativeValue = data.initialInvestment;
+        let cumulativeContribution = data.initialInvestment;
+        for (let month = 1; month <= data.investmentPeriod; month++) {
+          cumulativeValue = cumulativeValue * (1 + rate) + data.investmentValue;
+          cumulativeContribution += data.investmentValue;
+          const percentage = ((cumulativeValue / cumulativeContribution) - 1) * 100;
+          periodicResultsHtml += `
+            <div class="periodic-result-item">
+              <div class="period-label">Mês ${month}</div>
+              <div class="period-value">${formatCurrency(cumulativeValue)}</div>
+              <div class="period-percentage">${formatPercentage(percentage)}</div>
+            </div>
+          `;
+        }
+      } else {
+        const years = Math.floor(data.investmentPeriod / 12);
+        let cumulativeValue = data.initialInvestment;
+        let cumulativeContribution = data.initialInvestment;
+        for (let year = 1; year <= years; year++) {
+          for (let m = 1; m <= 12; m++) {
+            cumulativeValue = cumulativeValue * (1 + rate) + data.investmentValue;
+            cumulativeContribution += data.investmentValue;
+          }
+          const percentage = ((cumulativeValue / cumulativeContribution) - 1) * 100;
+          periodicResultsHtml += `
+            <div class="periodic-result-item">
+              <div class="period-label">Ano ${year}</div>
+              <div class="period-value">${formatCurrency(cumulativeValue)}</div>
+              <div class="period-percentage">${formatPercentage(percentage)}</div>
+            </div>
+          `;
+        }
+      }
+      periodicResultList.innerHTML = headerHtml + periodicResultsHtml;
+    }
+
+    // Lógica dos botões de rolagem
+    let hideTimeout;
+    function updateScrollButtons() {
+      const scrollDownBtn = document.getElementById('scrollDownBtn');
+      const scrollUpBtn = document.getElementById('scrollUpBtn');
+      if ((window.innerHeight + window.scrollY) < document.body.scrollHeight) {
+        scrollDownBtn.style.display = 'flex';
+        scrollDownBtn.classList.remove('hidden');
+      } else {
+        scrollDownBtn.style.display = 'none';
+      }
+      if (window.scrollY > 0) {
+        scrollUpBtn.style.display = 'flex';
+        scrollUpBtn.classList.remove('hidden');
+      } else {
+        scrollUpBtn.style.display = 'none';
+      }
+    }
+    function showScrollButtonsWithTimeout() {
+      updateScrollButtons();
+      clearTimeout(hideTimeout);
+      hideTimeout = setTimeout(() => {
+        const scrollDownBtn = document.getElementById('scrollDownBtn');
+        const scrollUpBtn = document.getElementById('scrollUpBtn');
+        if (scrollDownBtn.style.display === 'flex') {
+          scrollDownBtn.classList.add('hidden');
+        }
+        if (scrollUpBtn.style.display === 'flex') {
+          scrollUpBtn.classList.add('hidden');
+        }
+      }, 3000);
+    }
+    window.addEventListener('scroll', showScrollButtonsWithTimeout);
+    window.addEventListener('resize', showScrollButtonsWithTimeout);
+    document.addEventListener('click', showScrollButtonsWithTimeout);
+    showScrollButtonsWithTimeout();
+
+    document.getElementById('scrollDownBtn').addEventListener('click', () => {
+      window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+    });
+    document.getElementById('scrollUpBtn').addEventListener('click', () => {
+      window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

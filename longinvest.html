@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LongInvest - Calculadora de Investimento</title>
+  <link rel="stylesheet" href="style-longinvest.css">
+  <script>
+    // Se o tema não estiver definido no localStorage, define como 'theme-default'
+    if (!localStorage.getItem('theme')) {
+      localStorage.setItem('theme', 'theme-violet');
+    }
+    // Aplica o tema salvo ao carregar a página
+    document.documentElement.className = localStorage.getItem('theme');
+
+    // Inicializa a flag da barra inferior se não estiver definida
+    //if (localStorage.getItem('showFooter') === null) {
+      localStorage.setItem('showFooter', 'false');
+    //}
+  </script>
+</head>
+<body>
+
+  <!-- Cabeçalho simulando o topo do app -->
+  <div class="app-header">
+    <h1>LongInvest</h1>
+  </div>
+
+  <!-- Container principal (conteúdo do app) -->
+  <div class="app-container">
+    <!-- Card com o formulário -->
+    <div class="card">
+      <h2>Calculadora de Investimento</h2>
+      <form id="investmentForm">
+        <label for="initialInvestment">Investimento Inicial (R$):</label>
+        <input type="number" id="initialInvestment" name="initialInvestment" required>
+
+        <label for="investmentType">Tipo de Aporte:</label>
+        <select id="investmentType" name="investmentType">
+          <option value="daily" data-friendly="Diário">Diário</option>
+          <option value="monthly" data-friendly="Mensal">Mensal</option>
+          <option value="annual" data-friendly="Anual">Anual</option>
+        </select>
+
+        <label for="investmentValue">Valor do Aporte (R$):</label>
+        <input type="number" id="investmentValue" name="investmentValue" required>
+
+        <label for="investmentPeriod">Período de Investimento (em meses):</label>
+        <select id="investmentPeriod" name="investmentPeriod">
+          <option value="1">1 mês</option>
+          <option value="3">3 meses</option>
+          <option value="6">6 meses</option>
+          <option value="12">1 ano</option>
+          <option value="24">2 anos</option>
+          <option value="36">3 anos</option>
+          <option value="60">5 anos</option>
+          <option value="84">7 anos</option>
+          <option value="96">8 anos</option>
+          <option value="120">10 anos</option>
+          <option value="180">15 anos</option>
+          <option value="240">20 anos</option>
+          <option value="360">30 anos</option>
+        </select>
+
+        <label for="investmentAsset">Ativo:</label>
+        <select id="investmentAsset" name="investmentAsset">
+          <option value="bitcoin" data-friendly="Bitcoin">Bitcoin</option>
+          <option value="dolar" data-friendly="Dólar">Dólar</option>
+          <option value="sp500" data-friendly="Índice S&P500">Índice S&P500</option>
+          <option value="nasdaq" data-friendly="Índice NASDAQ">Índice NASDAQ</option>
+          <option value="coke" data-friendly="Coca-cola (COKE) NASDAQ">Coca-cola (COKE) NASDAQ</option>
+          <option value="brk_a" data-friendly="Berkshire Hathaway-A">Berkshire Hathaway-A</option>
+          <option value="bovespa" data-friendly="Índice Bovespa">Índice Bovespa</option>
+          <option value="tesouro_selic" data-friendly="Tesouro SELIC">Tesouro SELIC</option>
+          <option value="poupanca_br" data-friendly="Poupança Brasileira">Poupança Brasileira</option>
+        </select>
+
+        <input type="submit" value="Calcular">
+      </form>
+    </div>
+    <!-- Opção para exibir/ocultar a barra inferior -->
+    <!--
+    <div class="footer-toggle" style="text-align: center; margin: 10px 0;">
+      <label>
+        <input type="checkbox" id="toggleFooter" checked>
+        Exibir Barra Inferior
+      </label>
+    </div>
+    -->
+  </div>
+
+  <!-- Barra inferior fixa (simulando navegação do app) -->
+  <div class="app-footer">
+    <button>Home</button>
+    <button>Histórico</button>
+    <button>Perfil</button>
+  </div>
+
+  <script>
+    // Ajusta a exibição da barra inferior com base na flag armazenada
+    document.addEventListener('DOMContentLoaded', () => {
+      //const toggleFooter = document.getElementById('toggleFooter');
+      if (localStorage.getItem('showFooter') === 'false') {
+        //toggleFooter.checked = false; //descomentar se quiser que funcione com o checkbox
+        document.querySelector('.app-footer').style.display = 'none';
+      } else {
+        //toggleFooter.checked = true; //descomentar se quiser que funcione com o checkbox
+        document.querySelector('.app-footer').style.display = 'flex';
+      }
+
+      toggleFooter.addEventListener('change', () => {
+        if (toggleFooter.checked) {
+          localStorage.setItem('showFooter', 'true');
+          document.querySelector('.app-footer').style.display = 'flex';
+        } else {
+          localStorage.setItem('showFooter', 'false');
+          document.querySelector('.app-footer').style.display = 'none';
+        }
+      });
+    });
+
+    document.getElementById('investmentForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
+      const investmentType = document.getElementById('investmentType').value;
+      const investmentValue = parseFloat(document.getElementById('investmentValue').value);
+      const investmentPeriod = parseInt(document.getElementById('investmentPeriod').value); 
+
+      const investmentTypeSelect = document.getElementById('investmentType');
+      const selectedInvestmentOption = investmentTypeSelect.options[investmentTypeSelect.selectedIndex];
+      const investmentTypeFriendly = selectedInvestmentOption.getAttribute('data-friendly');
+      
+      // Recupera a descrição amigável diretamente do option selecionado
+      const assetSelect = document.getElementById('investmentAsset');
+      const selectedAssetOption = assetSelect.options[assetSelect.selectedIndex];
+      const investmentAsset = assetSelect.value;
+      const assetFriendly = selectedAssetOption.getAttribute('data-friendly');
+
+      // Define o objeto assetRates
+      const assetRates = {
+        bitcoin: 0.0322,
+        dolar: 0.0048,
+        sp500: 0.0125,
+        nasdaq: 0.0152,
+        coke: 0.0317,
+        brk_a: 0.0145,
+        bovespa: 0.0085,
+        tesouro_selic: 0.0072,
+        poupanca_br: 0.00533,
+      };
+
+      const rate = assetRates[investmentAsset] || 0;
+
+      let totalPeriods, periodicRate;
+      if (investmentType === 'daily') {
+        totalPeriods = investmentPeriod * 30;
+        periodicRate = Math.pow(1 + rate, 1/30) - 1;
+      } else if (investmentType === 'monthly') {
+        totalPeriods = investmentPeriod;
+        periodicRate = rate;
+      } else if (investmentType === 'annual') {
+        totalPeriods = investmentPeriod / 12;
+        periodicRate = Math.pow(1 + rate, 12) - 1;
+      }
+
+      let totalInvestment = initialInvestment;
+      for (let i = 0; i < totalPeriods; i++) {
+        totalInvestment *= (1 + periodicRate);
+        totalInvestment += investmentValue;
+      }
+
+      const totalContributions = initialInvestment + (investmentValue * totalPeriods);
+      const gainTotal = totalInvestment - totalContributions;
+      const gainPercentage = (gainTotal / totalContributions) * 100;
+      const gainInitial = totalInvestment - initialInvestment;
+      const gainInitialPercentage = (gainInitial / initialInvestment) * 100;
+
+      // Armazena todos os dados, incluindo o objeto assetRates
+      const dataToStore = {
+        initialInvestment,
+        investmentType,
+        investmentTypeFriendly,
+        investmentValue,
+        investmentPeriod,
+        investmentAsset,
+        assetFriendly,
+        totalInvestment,
+        totalContributions,
+        gainPercentage,
+        gainInitialPercentage,
+        assetRates  // Armazena o objeto assetRates
+      };
+
+      localStorage.setItem('investmentData', JSON.stringify(dataToStore));
+      window.location.href = 'results-longinvest.html';
+    });
+  </script>
+</body>
+</html>

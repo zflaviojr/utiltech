@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="UtilTech – Ferramentas Online Úteis para o dia a dia"/>
+  <meta name="keywords" content="calculadora, gerador de senhas, temporizador, cronômetro, sorteio, utilidades digitais"/>
+  <title>UtilTech | Ferramentas Online Úteis</title>
+
+  <!-- Tailwind & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+<!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[var(--primary-color)] to-[var(--secondary-color)] shadow-md">
+    <div class="h-full container mx-auto flex items-center justify-between px-6">
+      <div class="flex items-center space-x-4">
+        <button class="md:hidden text-white text-2xl" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <button onclick="showWelcome()" class="text-white text-2xl hover:opacity-80" aria-label="Home">
+          <i class="fas fa-home"></i>
+        </button>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="text-white">Modo Escuro</span>
+        <label class="dark-mode-toggle">
+          <input id="dark-toggle" type="checkbox" onclick="toggleDarkMode()"/>
+          <span class="dark-mode-slider"></span>
+        </label>
+        <select id="lang-select" class="bg-transparent text-white hover:opacity-80 ml-4">
+          <option value="pt" selected>🇧🇷 PT</option>
+          <option value="en">🇺🇸 EN</option>
+        </select>
+
+                      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar fixed top-16 left-0 h-full w-64 pt-12 bg-white dark:bg-gray-800 shadow-lg z-40 transform -translate-x-full md:translate-x-0 transition-transform">
+    <!-- Logo + Site Name -->
+    <div class="px-6 mt-8 mb-6 flex items-center space-x-2">
+      <!-- Custom SVG Logo -->
+      <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="var(--primary-color)"/>
+        <text x="50" y="60" font-size="50" text-anchor="middle" fill="white" font-family="Arial, sans-serif">UT</text>
+      </svg>
+      <span class="text-2xl font-bold text-gray-800 dark:text-gray-100">UtilsTech</span>
+    </div>
+    <nav class="px-4 space-y-4">
+      <button onclick="showMosaic()"
+              class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center">
+        <i class="fas fa-th-large mr-2"></i> Mosaico
+      </button>
+      <ul class="space-y-2">
+        <li><button onclick="showTool('cpf-generator')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-id-card mr-2"></i>Gerador de CPF</button></li>
+        <li><button onclick="showTool('simple-calculator')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-calculator mr-2"></i>Calculadora Simples</button></li>
+        <li><button onclick="showTool('scientific-calculator')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-square-root-alt mr-2"></i>Calculadora Científica</button></li>
+        <li><button onclick="showTool('bioimpedance-calculator')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-weight mr-2"></i>Bioimpedância</button></li>
+        <li><button onclick="showTool('date-calculator')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="far fa-calendar-alt mr-2"></i>Calculadora de Datas</button></li>
+        <li><button onclick="showTool('password-generator')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-key mr-2"></i>Gerador de Senhas</button></li>
+        <li><button onclick="showTool('countdown-timer')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-hourglass-half mr-2"></i>Contagem Regressiva</button></li>
+        <li><button onclick="showTool('stopwatch')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-stopwatch mr-2"></i>Cronômetro</button></li>
+        <li><button onclick="showTool('random-number')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-random mr-2"></i>Sorteio de Números</button></li>
+        <li><button onclick="showTool('todo')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-list-check mr-2"></i>Lista de Tarefas</button></li>
+        <li><button onclick="showTool('longinvest')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center"><i class="fas fa-chart-line mr-2"></i>Calculadora de Investimento</button></li>
+        <li>
+          <button onclick="showTool('shopping')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center">
+            <i class="fas fa-shopping-cart mr-2"></i>Lista de Compras
+          </button>
+        </li>
+
+      </ul>
+    </nav>
+    <div class="px-4 mt-6">
+      <div class="ad-container">Banner na Sidebar</div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="pt-24 ml-0 md:ml-64 px-6 pb-12">
+
+    <!-- Landing area -->
+    <div id="landing">
+      <div class="ad-container max-w-4xl mx-auto">Banner Topo (728×90)</div>
+
+      <div id="welcome-panel" class="max-w-lg mx-auto my-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+        <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">Bem-vindo ao UtilTech</h2>
+        <p class="text-lg mb-6 text-gray-600 dark:text-gray-300 text-center">Explore nossas ferramentas e simplifique seu dia a dia!</p>
+        <button onclick="startApp()" class="px-6 py-3 bg-[var(--secondary-color)] text-white rounded-lg hover:opacity-90 mx-auto block">
+          <i class="fas fa-play mr-2"></i>Começar
+        </button>
+      </div>
+
+      <div class="ad-container max-w-4xl mx-auto">Banner entre Welcome e Mosaico</div>
+
+      <section id="mosaic" class="hidden max-w-4xl mx-auto px-4 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <button onclick="showTool('simple-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-calculator text-4xl mb-2"></i><span>Calculadora Simples</span>
+        </button>
+        <button onclick="showTool('scientific-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-square-root-alt text-4xl mb-2"></i><span>Calculadora Científica</span>
+        </button>
+        <button onclick="showTool('bioimpedance-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-weight text-4xl mb-2"></i><span>Bioimpedância</span>
+        </button>
+        <button onclick="showTool('date-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="far fa-calendar-alt text-4xl mb-2"></i><span>Calculadora de Datas</span>
+        </button>
+        <button onclick="showTool('password-generator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-key text-4xl mb-2"></i><span>Gerador de Senhas</span>
+        </button>
+        <button onclick="showTool('countdown-timer')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-hourglass-half text-4xl mb-2"></i><span>Contagem Regressiva</span>
+        </button>
+        <button onclick="showTool('stopwatch')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-stopwatch text-4xl mb-2"></i><span>Cronômetro</span>
+        </button>
+        <button onclick="showTool('random-number')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-random text-4xl mb-2"></i><span>Sorteio de Números</span>
+        </button>
+        <button onclick="showTool('todo')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-list-check text-4xl mb-2"></i><span>Lista de Tarefas</span>
+        </button>
+        <!-- Gerador de CPF -->
+        <button onclick="showTool('cpf-generator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-id-card text-4xl mb-2"></i>
+          <span>Gerador de CPF</span>
+        </button>
+
+        <!-- Calculadora de Investimento -->
+        <button onclick="showTool('longinvest')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-chart-line text-4xl mb-2"></i>
+          <span>Calc. Investimento</span>
+        </button>
+
+        <!-- Lista de Compras -->
+        <button onclick="showTool('shopping')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+          <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+          <span>Lista de Compras</span>
+        </button>
+      </section>
+
+      <div class="ad-container max-w-4xl mx-auto">Banner abaixo do Mosaico</div>
+    </div>
+
+    <!-- Tools -->
+    <div id="tools" class="max-w-4xl mx-auto px-4 space-y-8">
+
+      <!-- Banner vertical esquerdo -->
+      <div class="ad-container absolute top-60 left-80 h-full w-40 bg-gray-200 dark:bg-gray-700 shadow-md flex flex-col items-center justify-center">
+        <div class="ad-container text-center">
+            <span class="text-sm text-gray-600 dark:text-gray-400">Banner Vertical</span>
+        </div>
+      </div>
+
+      <!-- Gerador de CPF -->
+      <div id="cpf-generator-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes de Gerador de CPF</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold mb-4">Gerador de CPF</h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-6">
+            Clique em Gerar para obter um CPF válido.
+          </p>
+          <div class="flex mb-4">
+            <input id="cpf-output" type="text" readonly
+                   class="flex-1 px-4 py-2 border rounded-l-lg bg-gray-50 dark:bg-gray-700 text-lg font-mono"/>
+            <button id="cpf-copy"
+                    class="px-4 bg-[var(--secondary-color)] text-white rounded-r-lg hover:opacity-90">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <button id="cpf-generate"
+                  class="w-full bg-[var(--primary-color)] hover:bg-indigo-700 text-white py-2 rounded-lg">
+            <i class="fas fa-sync-alt mr-2"></i>Gerar CPF
+          </button>
+        </div>
+      </div>
+
+      <!-- Simple Calculator -->
+      <div id="simple-calculator-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes da Calculadora Simples</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-4">Calculadora Simples</h2>
+          <div id="calc-display" class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-4 text-right text-2xl font-mono">0</div>
+          <div class="grid grid-cols-4 gap-2">
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('7')">7</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('8')">8</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('9')">9</button>
+            <button class="p-4 bg-red-100 dark:bg-red-700 hover:bg-red-200 dark:hover:bg-red-600 rounded-lg" onclick="clearCalc()">C</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('4')">4</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('5')">5</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('6')">6</button>
+            <button class="p-4 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-lg" onclick="calcInput('+')">+</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('1')">1</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('2')">2</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('3')">3</button>
+            <button class="p-4 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-lg" onclick="calcInput('-')">-</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('0')">0</button>
+            <button class="p-4 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="calcInput('.')">.</button>
+            <button class="p-4 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-lg" onclick="calcInput('*')">×</button>
+            <button class="p-4 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-lg" onclick="calcInput('/')">÷</button>
+          </div>
+          <button class="mt-4 w-full bg-green-500 dark:bg-green-700 hover:bg-green-600 text-white p-4 rounded-lg" onclick="calculate()">=</button>
+        </div>
+      </div>
+
+      <!-- Scientific Calculator -->
+      <div id="scientific-calculator-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes da Calculadora Científica</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-4">Calculadora Científica</h2>
+          <div id="sci-display" class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 mb-4 text-right text-2xl font-mono">0</div>
+          <div class="grid grid-cols-5 gap-2">
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('7')">7</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('8')">8</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('9')">9</button>
+            <button class="p-3 bg-red-100 dark:bg-red-700 hover:bg-red-200 dark:hover:bg-red-600 rounded-lg" onclick="clearSciCalc()">C</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-600 rounded-lg" onclick="sciInput('sin(')">sin</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('4')">4</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('5')">5</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('6')">6</button>
+            <button class="p-3 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-lg" onclick="sciInput('+')">+</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-600 rounded-lg" onclick="sciInput('cos(')">cos</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('1')">1</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('2')">2</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('3')">3</button>
+            <button class="p-3 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-lg" onclick="sciInput('-')">-</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-600 rounded-lg" onclick="sciInput('tan(')">tan</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('0')">0</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('.')">.</button>
+            <button class="p-3 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover:bg-blue-600 rounded-lg" onclick="sciInput('*')">×</button>
+            <button class="p-3 bg-blue-100 dark:bg-blue-700 hover:bg-blue-200 dark:hover	bg-blue-600 rounded-lg" onclick="sciInput('/')">÷</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-600 rounded-lg" onclick="sciInput('sqrt(')">√</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput('(')">(</button>
+            <button class="p-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 rounded-lg" onclick="sciInput(')')">)</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-600 rounded-lg" onclick="sciInput('^')">^</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover:bg-purple-600 rounded-lg" onclick="sciInput('pi')">π</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover	bg-purple-600 rounded-lg" onclick="sciInput('log(')">log</button>
+            <button class="p-3 bg-purple-100 dark:bg-purple-700 hover:bg-purple-200 dark:hover	bg-purple-600 rounded-lg" onclick="sciInput('ln(')">ln</button>
+          </div>
+          <button class="mt-4 w-full bg-green-500 dark:bg-green-700 hover:bg-green-600 dark:hover:bg-green-600 text-white p-3 rounded-lg" onclick="sciCalculate()">=</button>
+        </div>
+      </div>
+
+      <!-- Bioimpedância -->
+      <div id="bioimpedance-calculator-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes da Bioimpedância</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold mb-4 text-center">Calculadora de Bioimpedância</h2>
+          <p class="text-sm text-gray-600 dark:text-gray-400 text-center mb-6">Estimativa da composição corporal</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Formulário -->
+            <div class="space-y-4">
+              <div>
+                <span class="block font-medium mb-1">Gênero</span>
+                <label class="inline-flex items-center mr-4">
+                  <input type="radio" name="gender" value="male" checked class="form-radio text-blue-600"/>
+                  <span class="ml-2">Masculino</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" name="gender" value="female" class="form-radio text-pink-500"/>
+                  <span class="ml-2">Feminino</span>
+                </label>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">Idade (anos)</label>
+                <input id="age" type="number" min="18" max="100" value="30"
+                  class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700"/>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">Altura (cm)</label>
+                <input id="height" type="number" min="100" max="250" value="170"
+                  class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700"/>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">Peso (kg)</label>
+                <input id="weight" type="number" min="30" max="200" value="70"
+                  class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700"/>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">Nível de Atividade Física</label>
+                <select id="activity-level"
+                  class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700">
+                  <option value="1.2">Sedentário</option>
+                  <option value="1.375">Levemente ativo</option>
+                  <option value="1.55" selected>Moderadamente ativo</option>
+                  <option value="1.725">Muito ativo</option>
+                  <option value="1.9">Extremamente ativo</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">Impedância (Ω) – Opcional <span class="text-xs text-gray-400">(se tiver medidor)</span></label>
+                <input id="resistance" type="number" placeholder="Ex: 500"
+                  class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700"/>
+              </div>
+              <button onclick="calculateBioimpedance()"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg mt-4">
+                Calcular Composição Corporal
+              </button>
+            </div>
+            <!-- Resultados -->
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg bg-blue-50 dark:bg-blue-900">
+                  <span class="block text-sm">IMC</span>
+                  <h3 id="bmi-result" class="text-2xl font-bold">--</h3>
+                  <span id="bmi-category" class="text-xs text-gray-600 dark:text-gray-400">--</span>
+                </div>
+                <div class="p-4 rounded-lg bg-green-50 dark:bg-green-900">
+                  <span class="block text-sm">Gordura Corporal</span>
+                  <h3 id="fat-percent-result" class="text-2xl font-bold">--</h3>
+                  <span id="fat-category" class="text-xs text-gray-600 dark:text-gray-400">--</span>
+                </div>
+                <div class="p-4 rounded-lg bg-purple-50 dark:bg-purple-900">
+                  <span class="block text-sm">Massa Muscular</span>
+                  <h3 id="lean-percent-result" class="text-2xl font-bold">--</h3>
+                  <span class="text-xs text-gray-600 dark:text-gray-400">do peso total</span>
+                </div>
+                <div class="p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900">
+                  <span class="block text-sm">Água Corporal</span>
+                  <h3 id="water-percent-result" class="text-2xl font-bold">--</h3>
+                  <span class="text-xs text-gray-600 dark:text-gray-400">do peso total</span>
+                </div>
+                <div class="p-4 rounded-lg bg-red-50 dark:bg-red-900">
+                  <span class="block text-sm">Massa Óssea</span>
+                  <h3 id="bone-percent-result" class="text-2xl font-bold">--</h3>
+                  <span class="text-xs text-gray-600 dark:text-gray-400">do peso total</span>
+                </div>
+                <div class="p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900">
+                  <span class="block text-sm">Metabolismo Basal</span>
+                  <h3 id="bmr-result" class="text-2xl font-bold">--</h3>
+                  <span class="text-xs text-gray-600 dark:text-gray-400">calorias/dia</span>
+                </div>
+              </div>
+              <!-- Distribuição -->
+              <div>
+                <h4 class="font-semibold mb-2">Distribuição da Composição Corporal</h4>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
+                  <div id="dist-fat" class="h-4 rounded-full bg-green-600 inline-block"></div>
+                  <div id="dist-muscle" class="h-4 rounded-full bg-purple-600 inline-block"></div>
+                  <div id="dist-water" class="h-4 rounded-full bg-yellow-600 inline-block"></div>
+                  <div id="dist-bone" class="h-4 rounded-full bg-red-600 inline-block"></div>
+                </div>
+                <div class="flex justify-between text-xs mt-1">
+                  <span>Gordura</span><span>Músculo</span><span>Água</span><span>Osso</span>
+                </div>
+              </div>
+              <!-- Observação -->
+              <div class="p-4 border-l-4 border-blue-600 bg-blue-50 dark:bg-blue-900 text-sm text-gray-700 dark:text-gray-300">
+                <strong>Observação:</strong> Esta é uma estimativa baseada em fórmulas. Para resultados mais precisos, consulte um profissional de saúde com equipamentos específicos.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculadora de Datas -->
+      <div id="date-calculator-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes da Calculadora de Datas</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-4">Calculadora de Datas</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Diferença -->
+            <div>
+              <h3 class="font-semibold mb-3">Diferença entre Datas</h3>
+              <label class="block mb-2">Data Inicial</label>
+              <input lang="pt-BR"     id="start-date" type="date" class="w-full w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/ >
+              <label class="block mb-2">Data Final</label>
+              <input lang="pt-BR"     id="end-date" type="date" class="w-full w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/ >
+              <button class="w-full bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white py-2 rounded-lg" onclick="calculateDateDifference()">Calcular Diferença</button>
+              <div id="date-difference-result" class="mt-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-center">--</div>
+            </div>
+            <!-- Ad/Sub -->
+            <div>
+              <h3 class="font-semibold mb-3">Adicionar/Subtrair Tempo</h3>
+              <label class="block mb-2">Data Base</label>
+              <input lang="pt-BR"     id="base-date" type="date" class="w-full w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/ >
+              <div class="grid grid-cols-3 gap-2 mb-4">
+                <div><label class="block mb-1">Anos</label><input id="years-to-add" type="number" value="0" class="w-full px-2 py-1 border rounded-lg bg-gray-50 dark:bg-gray-700"/></div>
+                <div><label class="block mb-1">Meses</label><input id="months-to-add" type="number" value="0" class="w-full px-2 py-1 border rounded-lg bg-gray-50 dark:bg-gray-700"/></div>
+                <div><label class="block mb-1">Dias</label><input id="days-to-add" type="number" value="0" class="w-full px-2 py-1 border rounded-lg bg-gray-50 dark:bg-gray-700"/></div>
+              </div>
+              <div class="flex space-x-2 mb-4">
+                <button class="flex-1 bg-green-500 dark:bg-green-700 hover:bg-green-600 dark:hover:bg-green-600 text-white py-2 rounded-lg" onclick="addToDate()">Adicionar</button>
+                <button class="flex-1 bg-red-500 dark:bg-red-700 hover:bg-red-600 dark:hover:bg-red-600 text-white py-2 rounded-lg" onclick="subtractFromDate()">Subtrair</button>
+              </div>
+              <div id="date-result" class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-center">--</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gerador de Senhas -->
+      <div id="password-generator-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes do Gerador de Senhas</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-4">Gerador de Senhas Seguras</h2>
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-2">
+              <label>Tamanho: <span id="length-value">12</span></label>
+              <input id="password-length" type="range" min="4" max="32" value="12" class="w-1/2" oninput="updateLengthValue()"/>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <label class="inline-flex items-center"><input id="uppercase" type="checkbox" checked/><span class="ml-2">A-Z</span></label>
+              <label class="inline-flex items-center"><input id="lowercase" type="checkbox" checked/><span class="ml-2">a-z</span></label>
+              <label class="inline-flex items-center"><input id="numbers" type="checkbox" checked/><span class="ml-2">0-9</span></label>
+              <label class="inline-flex items-center"><input id="symbols" type="checkbox" checked/><span class="ml-2">!@#$%</span></label>
+            </div>
+            <div class="flex mb-4">
+              <input lang="pt-BR" id="generated-password" type="text" readonly class="flex-1 px-3 py-2 border rounded-l-lg bg-gray-50 dark:bg-gray-700"/>
+              <button class="px-4 rounded-r-lg bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white" onclick="copyPassword()">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <div class="flex space-x-2">
+              <button class="flex-1 bg-green-500 dark:bg-green-700 hover:bg-green-600 dark:hover:bg-green-600 text-white py-2 rounded-lg" onclick="generatePassword()">Gerar</button>
+              <button class="flex-1 bg-purple-500 dark:bg-purple-700 hover:bg-purple-600 dark:hover:bg-purple-600 text-white py-2 rounded-lg" onclick="generateMultiplePasswords()">Gerar Várias</button>
+            </div>
+          </div>
+          <div id="multiple-passwords" class="hidden">
+            <h3 class="font-semibold mb-3">Senhas Geradas</h3>
+            <div id="password-list" class="grid grid-cols-1 md:grid-cols-2 gap-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contagem Regressiva -->
+      <div id="countdown-timer-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes da Contagem Regressiva</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-4">Contagem Regressiva</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block mb-2">Evento</label>
+              <input lang="pt-BR" id="event-name" type="text" placeholder="Ex: Aniversário" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/>
+              <label class="block mb-2">Data/Hora</label>
+              <input id="event-datetime" type="datetime-local" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/>
+              <button class="w-full bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white py-2 rounded-lg" onclick="startCountdown()">Iniciar</button>
+              <button class="w-full mt-2 bg-gray-500 dark:bg-gray-700 hover:bg-gray-600 dark:hover:bg-gray-600 text-white py-2 rounded-lg" onclick="resetCountdown()">Resetar</button>
+            </div>
+            <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center">
+              <div id="countdown-event" class="text-xl font-semibold mb-4">--</div>
+              <div class="grid grid-cols-4 gap-2">
+                <div class="p-3 bg-white dark:bg-gray-800 rounded-lg"><div id="countdown-days" class="text-3xl font-bold">00</div><div>Dias</div></div>
+                <div class="p-3 bg-white dark:bg-gray-800 rounded-lg"><div id="countdown-hours" class="text-3xl font-bold">00</div><div>Horas</div></div>
+                <div class="p-3 bg-white dark:bg-gray-800 rounded-lg"><div id="countdown-minutes" class="text-3xl font-bold">00</div><div>Min</div></div>
+                <div class="p-3 bg-white dark:bg-gray-800 rounded-lg"><div id="countdown-seconds" class="text-3xl font-bold">00</div><div>Seg</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cronômetro -->
+      <div id="stopwatch-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes do Cronômetro</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-4">Cronômetro</h2>
+          <div class="text-center mb-8">
+            <div id="stopwatch-display" class="text-5xl font-mono">00:00:00.00</div>
+            <div class="flex justify-center space-x-4 mt-4">
+              <button id="start-stopwatch" class="bg-green-500 dark:bg-green-700 hover:bg-green-600 dark:hover:bg-green-600 text-white py-2 px-4 rounded-full"><i class="fas fa-play"></i></button>
+              <button id="stop-stopwatch" class="bg-red-500 dark:bg-red-700 hover:bg-red-600 dark:hover:bg-red-600 text-white py-2 px-4 rounded-full" disabled><i class="fas fa-stop"></i></button>
+              <button id="lap-stopwatch" class="bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white py-2 px-4 rounded-full"><i class="fas fa-flag"></i></button>
+              <button id="reset-stopwatch" class="bg-gray-500 dark:bg-gray-700 hover:bg-gray-600 dark:hover:bg-gray-600 text-white py-2 px-4 rounded-full"><i class="fas fa-undo"></i></button>
+            </div>
+          </div>
+          <div id="lap-times" class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg max-h-64 overflow-y-auto">
+            <div class="text-center text-gray-500 dark:text-gray-400">Nenhuma volta registrada</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sorteio de Números -->
+      <div id="random-number-container" class="tool-container hidden">
+        <div class="ad-container">Banner antes do Sorteio de Números</div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-bold mb-4">Sorteio de Números</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block mb-2">Mínimo</label>
+              <input id="min-number" type="number" value="1" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/>
+              <label class="block mb-2">Máximo</label>
+              <input id="max-number" type="number" value="100" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/>
+              <label class="block mb-2">Quantidade</label>
+              <input id="quantity" type="number" value="1" min="1" max="20" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/>
+              <label class="block mb-2">Tempo (s)</label>
+              <input id="draw-time" type="number" value="3" min="1" max="10" class="w-full px-3 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 mb-4"/>
+              <button class="w-full bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white py-2 rounded-lg" onclick="startRandomDraw()">Sortear</button>
+            </div>
+            <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 text-center">
+              <div id="random-draw-animation" class="text-5xl font-bold mb-4 h-20 flex items-center justify-center">--</div>
+              <div id="random-draw-result" class="text-xl font-semibold mb-2"></div>
+              <div id="random-draw-history" class="text-sm text-gray-600 dark:text-gray-400"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <!-- Lista de Tarefas -->
+        <div id="todo-container" class="tool-container hidden">
+            <div class="ad-container">Banner antes da Lista de Tarefas</div>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">Lista de Tarefas</h2>
+                <div class="flex mb-4">
+                <input id="todo-input" type="text" placeholder="Adicionar nova tarefa..."
+                        class="flex-1 px-4 py-2 border rounded-l-lg bg-gray-50 dark:bg-gray-700 focus:outline-none"/>
+                <button id="todo-add-btn"
+                        class="px-6 py-2 bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white rounded-r-lg">
+                    Adicionar
+                </button>
+                </div>
+                <ul id="todo-list" class="space-y-2 mb-4">
+        <li>
+          <button onclick="showTool('shopping')" class="w-full text-left p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center">
+            <i class="fas fa-shopping-cart mr-2"></i>Lista de Compras
+          </button>
+        </li>
+
+      </ul>
+                <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
+                  <span id="todo-count">0 tarefas</span>
+                  <div class="space-x-4">
+                    <button id="todo-clear" class="hover:underline">Limpar concluídas</button>
+                    <button id="todo-clear-all" class="hover:underline">Limpar todas</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculadora de Investimento -->
+        <div id="longinvest-container" class="tool-container hidden">
+          <div class="ad-container">Banner antes da Lista de Tarefas</div>
+          <iframe src="longinvest.html"
+                  class="w-full h-[800px] border-0 rounded-lg shadow-md"
+                  title="Calculadora de Investimento">
+          </iframe>
+        </div>
+
+
+        <!-- Lista de Compras -->
+        <div id="shopping-container" class="tool-container hidden">
+          <div class="ad-container">Banner antes da Lista de Compras</div>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold mb-4">Lista de Compras</h2>
+            <div class="flex mb-4 flex-wrap gap-2">
+              <input id="shopping-item" type="text" placeholder="Item" class="flex-1 px-4 py-2 border rounded bg-gray-50 dark:bg-gray-700 focus:outline-none"/>
+              <input id="shopping-price" type="number" min="0" step="0.01" placeholder="Preço" class="w-24 px-2 py-2 border bg-gray-50 dark:bg-gray-700 focus:outline-none"/>
+              <div class="flex items-center border bg-gray-50 dark:bg-gray-700 rounded">
+                <button id="dec-qty" class="px-3">–</button>
+                <span id="shopping-qty" class="px-3">0</span>
+                <button id="inc-qty" class="px-3">+</button>
+              </div>
+              <button id="shopping-add-btn" class="px-4 py-2 bg-[var(--secondary-color)] text-white rounded hover:opacity-90">Adicionar</button>
+            </div>
+            <ul id="shopping-list" class="space-y-2 mb-4"></ul>
+            <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400">
+              <span id="shopping-total">Total: R$ 0,00</span>
+              <div class="space-x-4">
+                <button id="shopping-clear-selected" class="hover:underline">Limpar Selecionados</button>
+                <button id="shopping-clear-all" class="hover:underline">Limpar Tudo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <div class="ad-container absolute top-60 right-80 h-full w-40 bg-gray-200 dark:bg-gray-700 shadow-md flex flex-col items-center justify-center" style="transform: translateX(100%);">
+        <div class="ad-container text-center">
+            <span class="text-sm text-gray-600 dark:text-gray-400">Banner Vertical</span>
+        </div>
+    </div>
+
+    <div class="ad-container max-w-4xl mx-auto">Banner antes do Rodapé</div>
+    <footer class="mt-16 text-center text-sm text-gray-600 dark:text-gray-400">
+      © 2023 UtilTech. Todos os direitos reservados.
+    </footer>
+
+  </main>
+  
+  <script src="script.js"></script>
+</body>
+</html>
