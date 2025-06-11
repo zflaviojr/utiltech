@@ -100,7 +100,7 @@
 }
 
 @media (max-width: 768px) {
-  .banner-vertical {
+  .vertical-banner {
     display: none !important;
   }
 
