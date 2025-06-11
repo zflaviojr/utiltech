@@ -48,6 +48,7 @@ function toggleDarkMode() {
     document.getElementById('welcome-panel').classList.add('hidden');
     document.getElementById('mosaic').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
+    if (window.innerWidth <= 768) toggleSidebar();
   }
   function showTool(id) {
     document.getElementById('landing').classList.add('hidden');
