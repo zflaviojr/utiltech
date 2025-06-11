@@ -8,6 +8,11 @@
   header {
     height: 5rem;
   }
+
+  .sidebar {
+  overflow-y: auto;
+  max-height: 100vh;
+  }
   
   /* Dark-mode toggle */
   .dark-mode-toggle {

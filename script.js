@@ -149,6 +149,14 @@ function toggleDarkMode() {
     const waterPct = (waterKg / weight) * 100;
     document.getElementById('water-percent-result').textContent = waterPct.toFixed(1) + '%';
 
+    // Água recomendada para ingestão diária (em litros)
+    let waterIntake;
+    if (gender === 'male') {
+      waterIntake = weight * 35; // 35 ml/kg
+    } else {
+      waterIntake = weight * 31; // 31 ml/kg
+    }
+    document.getElementById('water-intake-result').textContent = (waterIntake / 1000).toFixed(2) + ' L';
   
     // Massa óssea: estimativa ~5%
     const bonePct = 5;
@@ -171,6 +179,7 @@ function toggleDarkMode() {
     document.getElementById('dist-muscle').style.width  = (pm/total*100) + '%';
     document.getElementById('dist-water').style.width   = (pw/total*100) + '%';
     document.getElementById('dist-bone').style.width    = (pb/total*100) + '%';
+    
   }
   
   
