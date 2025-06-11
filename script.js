@@ -9,9 +9,30 @@ function toggleDarkMode() {
   }
   
   // Sidebar toggle (mobile)
+  /*
   function toggleSidebar() {
     document.querySelector('.sidebar').classList.toggle('-translate-x-full');
+  }*/
+
+  function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const isMobile = window.innerWidth < 768;
+
+  // Alterna visibilidade
+  if (sidebar.classList.contains('-translate-x-full')) {
+    sidebar.classList.remove('-translate-x-full');
+
+    // Se for mobile, fecha depois de 2 segundos
+    if (isMobile) {
+      setTimeout(() => {
+        sidebar.classList.add('-translate-x-full');
+      }, 2000);
+    }
+  } else {
+    sidebar.classList.add('-translate-x-full');
   }
+}
+
   
   // Navigation
   function startApp() {
