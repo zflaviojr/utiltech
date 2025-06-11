@@ -83,7 +83,7 @@
     color: #9ca3af;
     border-color: #4b5563;
   }
-  
+
 /* Banners Verticais */
 .vertical-banner {
   position: sticky;
@@ -98,6 +98,14 @@
     justify-content: center;
   }
 }
+
+/* Oculta os banners verticais em dispositivos móveis */
+@media (max-width: 1024px) {
+  .vertical-banner {
+    display: none !important;
+  }
+}
+
   
   /* Cards de resultado — cores mais saturadas */
 #bioimpedance-calculator-container .bg-blue-50 { background-color: #E0F2FE; }   /* azul claro */
