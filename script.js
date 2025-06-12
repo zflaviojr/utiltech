@@ -26,7 +26,7 @@ function toggleDarkMode() {
     if (isMobile) {
       setTimeout(() => {
         sidebar.classList.add('-translate-x-full');
-      }, 2000);
+      }, 4000);
     }
   } else {
     sidebar.classList.add('-translate-x-full');
@@ -48,19 +48,22 @@ function toggleDarkMode() {
     document.getElementById('welcome-panel').classList.remove('hidden');
     document.getElementById('landing').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
-    document.getElementById('mosaic').classList.remove('hidden');
+    document.getElementById('mosaic-container').classList.add('hidden');
+    document.getElementById('main-tools').classList.remove('hidden');
   }
 
   function showMosaic() {
     document.getElementById('landing').classList.remove('hidden');
     document.getElementById('welcome-panel').classList.add('hidden');
-    document.getElementById('mosaic').classList.remove('hidden');
+    document.getElementById('main-tools').classList.add('hidden');
+    document.getElementById('mosaic-container').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
     if (window.innerWidth <= 768) toggleSidebar();
   }
   function showTool(id) {
     document.getElementById('landing').classList.add('hidden');
-    document.getElementById('mosaic').classList.add('hidden');
+    document.getElementById('mosaic-container').classList.add('hidden');
+    document.getElementById('main-tools').classList.add('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
     document.getElementById(`${id}-container`).classList.remove('hidden');
     if (window.innerWidth <= 768) toggleSidebar();

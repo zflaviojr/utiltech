@@ -87,67 +87,92 @@
 
     <!-- Landing area -->
     <div id="landing">
-      <div class="ad-container max-w-4xl mx-auto">Banner Topo (728×90)</div>
 
-      <div id="welcome-panel" class="max-w-lg mx-auto my-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-        <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100 text-center">Bem-vindo ao UtilTech</h2>
-        <p class="text-lg mb-6 text-gray-600 dark:text-gray-300 text-center">Explore nossas ferramentas e simplifique seu dia a dia!</p>
-        <!--button onclick="startApp()" class="px-6 py-3 bg-[var(--secondary-color)] text-white rounded-lg hover:opacity-90 mx-auto block">
-          <i class="fas fa-play mr-2"></i>Começar
-        </!--button-->
+      <div id="welcome-panel" >
+
+        <div class="ad-container max-w-4xl mx-auto">Banner Topo (728×90)</div>
+
+        <div id="welcome-panel-message" class="max-w-4xl mx-auto my-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+          <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100 text-center">Bem-vindo ao UtilTech</h2>
+          <p class="text-lg mb-6 text-gray-600 dark:text-gray-300 text-center">Explore nossas ferramentas e simplifique seu dia a dia!</p>
+          <!--button onclick="startApp()" class="px-6 py-3 bg-[var(--secondary-color)] text-white rounded-lg hover:opacity-90 mx-auto block">
+            <i class="fas fa-play mr-2"></i>Começar
+          </!--button-->
+        </div>
+        
+        
+
+        <div id="welcome-panel-bests" class="max-w-4xl mx-auto my-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+          <p class="text-2xl font-bold mb-4 text-center">Ferramentas mais usadas</p>
+          <section id="main-tools" class="max-w-4xl mx-auto px-4 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <button onclick="showTool('cpf-generator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+              <i class="fas fa-id-card text-4xl mb-2"></i><span>Gerador de CPF</span>
+            </button>
+            <button onclick="showTool('bioimpedance-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+              <i class="fas fa-weight text-4xl mb-2"></i><span>Bioimpedância</span>
+            </button>
+            <button onclick="showTool('shopping')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+              <i class="fas fa-shopping-cart text-4xl mb-2"></i><span>Lista de Compras</span>
+            </button>
+          </section>
+        </div>
+
       </div>
 
-      <div class="ad-container max-w-4xl mx-auto">Banner entre Welcome e Mosaico</div>
-
-      <section id="mosaic" class="max-w-4xl mx-auto px-4 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <button onclick="showTool('simple-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-calculator text-4xl mb-2"></i><span>Calculadora Simples</span>
-        </button>
-        <button onclick="showTool('scientific-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-square-root-alt text-4xl mb-2"></i><span>Calculadora Científica</span>
-        </button>
-        <button onclick="showTool('bioimpedance-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-weight text-4xl mb-2"></i><span>Bioimpedância</span>
-        </button>
-        <button onclick="showTool('date-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="far fa-calendar-alt text-4xl mb-2"></i><span>Calculadora de Datas</span>
-        </button>
-        <button onclick="showTool('password-generator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-key text-4xl mb-2"></i><span>Gerador de Senhas</span>
-        </button>
-        <button onclick="showTool('countdown-timer')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-hourglass-half text-4xl mb-2"></i><span>Contagem Regressiva</span>
-        </button>
-        <button onclick="showTool('stopwatch')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-stopwatch text-4xl mb-2"></i><span>Cronômetro</span>
-        </button>
-        <button onclick="showTool('random-number')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-random text-4xl mb-2"></i><span>Sorteio de Números</span>
-        </button>
-        <button onclick="showTool('todo')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-list-check text-4xl mb-2"></i><span>Lista de Tarefas</span>
-        </button>
-        <!-- Gerador de CPF -->
-        <button onclick="showTool('cpf-generator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-id-card text-4xl mb-2"></i>
-          <span>Gerador de CPF</span>
-        </button>
-
-        <!-- Calculadora de Investimento -->
-        <button onclick="showTool('longinvest')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-chart-line text-4xl mb-2"></i>
-          <span>Calc. Investimento</span>
-        </button>
-
-        <!-- Lista de Compras -->
-        <button onclick="showTool('shopping')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
-          <i class="fas fa-shopping-cart text-4xl mb-2"></i>
-          <span>Lista de Compras</span>
-        </button>
-      </section>
-
-      <div class="ad-container max-w-4xl mx-auto">Banner abaixo do Mosaico</div>
     </div>
+
+      <div id="mosaic-container" class="hidden">
+        <div class="ad-container max-w-4xl mx-auto">Banner entre Welcome e Mosaico</div>
+
+        <section id="mosaic" class="max-w-4xl mx-auto px-4 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <button onclick="showTool('simple-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-calculator text-4xl mb-2"></i><span>Calculadora Simples</span>
+          </button>
+          <button onclick="showTool('scientific-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-square-root-alt text-4xl mb-2"></i><span>Calculadora Científica</span>
+          </button>
+          <button onclick="showTool('bioimpedance-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-weight text-4xl mb-2"></i><span>Bioimpedância</span>
+          </button>
+          <button onclick="showTool('date-calculator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="far fa-calendar-alt text-4xl mb-2"></i><span>Calculadora de Datas</span>
+          </button>
+          <button onclick="showTool('password-generator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-key text-4xl mb-2"></i><span>Gerador de Senhas</span>
+          </button>
+          <button onclick="showTool('countdown-timer')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-hourglass-half text-4xl mb-2"></i><span>Contagem Regressiva</span>
+          </button>
+          <button onclick="showTool('stopwatch')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-stopwatch text-4xl mb-2"></i><span>Cronômetro</span>
+          </button>
+          <button onclick="showTool('random-number')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-random text-4xl mb-2"></i><span>Sorteio de Números</span>
+          </button>
+          <button onclick="showTool('todo')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-list-check text-4xl mb-2"></i><span>Lista de Tarefas</span>
+          </button>
+          <!-- Gerador de CPF -->
+          <button onclick="showTool('cpf-generator')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-id-card text-4xl mb-2"></i>
+            <span>Gerador de CPF</span>
+          </button>
+
+          <!-- Calculadora de Investimento -->
+          <button onclick="showTool('longinvest')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-chart-line text-4xl mb-2"></i>
+            <span>Calc. Investimento</span>
+          </button>
+
+          <!-- Lista de Compras -->
+          <button onclick="showTool('shopping')" class="flex flex-col items-center p-6 bg-[var(--primary-color)] text-white rounded-xl shadow-md hover:opacity-90">
+            <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+            <span>Lista de Compras</span>
+          </button>
+        </section>
+
+        <!--div class="ad-container max-w-4xl mx-auto">Banner abaixo do Mosaico</!div-->
+      </div>
 
     <!-- Tools -->
     <div id="tools" class="max-w-4xl mx-auto px-4 space-y-8">
