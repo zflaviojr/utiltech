@@ -35,14 +35,22 @@ function toggleDarkMode() {
 
   
   // Navigation
+  /*
   function startApp() {
     document.getElementById('landing').classList.add('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
   }
+  */
+
   function showWelcome() {
+    //document.getElementById('landing').classList.remove('hidden');
+    //document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
+    document.getElementById('welcome-panel').classList.remove('hidden');
     document.getElementById('landing').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
+    document.getElementById('mosaic').classList.remove('hidden');
   }
+
   function showMosaic() {
     document.getElementById('landing').classList.remove('hidden');
     document.getElementById('welcome-panel').classList.add('hidden');
