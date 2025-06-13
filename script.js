@@ -465,7 +465,7 @@ function toggleSidebar() {
       anim.classList.remove('animate-pulse');
 
       res.textContent  = lastFake;
-      anim.textContent = res.textContent;
+      anim.textContent = '--';
 
       // Destaque visual com animação
       anim.classList.add('highlight');
@@ -476,9 +476,6 @@ function toggleSidebar() {
       entry.className = 'draw-history-entry';
       entry.innerHTML = `<time>${now}</time><span>${lastFake}</span>`;
       hist.prepend(entry);
-
-      anim.textContent = '--';
-
     }, t);
 
   }
