@@ -69,6 +69,7 @@ function toggleSidebar() {
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
     document.getElementById(`${id}-container`).classList.remove('hidden');
     if (window.innerWidth <= 768) toggleSidebar();
+    window.alert(`Tamanho ${window.innerWidth}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   
