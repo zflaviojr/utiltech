@@ -66,7 +66,9 @@ function toggleSidebar() {
     document.getElementById('main-tools').classList.add('hidden');
     document.getElementById('mosaic-container').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
+    window.alert(`IsMobile ${isMobile} SideBarOn ${sideBarOn} ` );
     if ((isMobile) && sideBarOn) toggleSidebar();
+    
   }
   function showTool(id) {
     document.getElementById('landing').classList.add('hidden');
@@ -74,8 +76,8 @@ function toggleSidebar() {
     document.getElementById('main-tools').classList.add('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
     document.getElementById(`${id}-container`).classList.remove('hidden');
+    window.alert(`IsMobile ${isMobile} SideBarOn ${sideBarOn} ` );
     if ((isMobile) && sideBarOn) toggleSidebar();
-    window.alert(`Tamanho ${window.innerWidth}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   
@@ -475,7 +477,7 @@ function toggleSidebar() {
       entry.innerHTML = `<time>${now}</time><span>${lastFake}</span>`;
       hist.prepend(entry);
 
-      anim.textContent = res.textContent;
+      anim.textContent = '--';
 
     }, t);
 
