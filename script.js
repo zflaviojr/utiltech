@@ -66,7 +66,7 @@ function toggleSidebar() {
     document.getElementById('main-tools').classList.add('hidden');
     document.getElementById('mosaic-container').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
-    //if (isMobile) toggleSidebar();
+    if ((isMobile) && sideBarOn) toggleSidebar();
   }
   function showTool(id) {
     document.getElementById('landing').classList.add('hidden');
