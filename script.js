@@ -18,7 +18,7 @@ if (localStorage.getItem('darkMode') === 'true') {
 
 
 const isMobile = window.innerWidth < 768;
-const sideBarOn = false;
+let sideBarOn = false;
 
 function toggleSidebar() {
   const sidebar = document.querySelector('.sidebar');  
