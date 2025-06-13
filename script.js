@@ -66,9 +66,7 @@ function toggleSidebar() {
     document.getElementById('main-tools').classList.add('hidden');
     document.getElementById('mosaic-container').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
-    window.alert(`IsMobile ${isMobile} SideBarOn ${sideBarOn} ` );
-    if ((isMobile) && sideBarOn) toggleSidebar();
-    
+    if ((isMobile) && sideBarOn) toggleSidebar();    
   }
   function showTool(id) {
     document.getElementById('landing').classList.add('hidden');
@@ -76,7 +74,6 @@ function toggleSidebar() {
     document.getElementById('main-tools').classList.add('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
     document.getElementById(`${id}-container`).classList.remove('hidden');
-    window.alert(`IsMobile ${isMobile} SideBarOn ${sideBarOn} ` );
     if ((isMobile) && sideBarOn) toggleSidebar();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -464,18 +461,22 @@ function toggleSidebar() {
     randTimeout = setTimeout(() => {
       anim.classList.remove('animate-pulse');
 
-      res.textContent  = lastFake;
-      anim.textContent = '--';
+      //adicione um delay para o resultado final
+      setTimeout(() => {
+        res.textContent  = lastFake;
+        //anim.textContent = '--';
 
-      // Destaque visual com animação
-      anim.classList.add('highlight');
-      setTimeout(() => anim.classList.remove('highlight'), 700);
+        // Destaque visual com animação
+        anim.classList.add('highlight');
+        setTimeout(() => anim.classList.remove('highlight'), 700);
 
-      const now = new Date().toLocaleTimeString();
-      const entry = document.createElement('div');
-      entry.className = 'draw-history-entry';
-      entry.innerHTML = `<time>${now}</time><span>${lastFake}</span>`;
-      hist.prepend(entry);
+        const now = new Date().toLocaleTimeString();
+        const entry = document.createElement('div');
+        entry.className = 'draw-history-entry';
+        entry.innerHTML = `<time>${now}</time><span>${lastFake}</span>`;
+        hist.prepend(entry);
+      }, 300);
+
     }, t);
 
   }
