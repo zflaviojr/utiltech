@@ -449,6 +449,12 @@
 }
 
 .draw-history-entry span {
+  color: #9ca3af;
+  font-weight: bold;
+  padding-right: 16px;
+}
+
+.dark .draw-history-entry span {
   color: #f9fafb;
   font-weight: bold;
   padding-right: 16px;
