@@ -610,8 +610,8 @@ document.getElementById('cpf-copy').onclick = () => {
   out.select();
   document.execCommand('copy');
   const btn = document.getElementById('cpf-copy');
-  btn.innerHTML = '<i class="fas fa-check"></i>';
-  setTimeout(() => btn.innerHTML = '<i class="fas fa-copy"></i>', 1000);
+  btn.innerHTML = '<i class="fas fa-check py-2"></i>';
+  setTimeout(() => btn.innerHTML = '<i class="fas fa-copy py-2"></i>', 1000);
 };
 
 // auto-gerar no load
@@ -674,18 +674,35 @@ document.addEventListener('DOMContentLoaded', () => {
       let html;
       if (isMobile) {
         html = `
-          <div class="flex justify-between items-center w-full">
-            <div class="flex items-center flex-shrink-0 min-w-0">
-              <input type="checkbox" data-index="${index}" class="shop-checkbox mr-2" ${item.selected ? 'checked' : ''}/>
-              <span class="font-medium truncate">${item.name}</span>
-            </div>
-            <div class="flex flex-col items-end flex-grow-0 space-y-1" style="min-width:110px;">
-              <input type="number" min="0" step="0.01" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price w-20 mb-1"/>
-              <input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty w-16 mb-1"/>
-              <span class="font-bold block">${formatMoney(itemTotal)}</span>
-              <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500"></i></button>
-            </div>
-          </div>
+<div class="w-full py-2">
+  <div class="flex items-center gap-2 mb-2">
+    <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
+    <span class="font-medium text-base text-gray-900 flex-1 truncate">${item.name}</span>
+    <label class="text-xs text-gray-500 mr-1 whitespace-nowrap">Qtd.</label>
+    <input
+      type="number"
+      min="0"
+      step="1"
+      value="${item.qty}"
+      data-index="${index}"
+      class="edit-qty bg-transparent border-b border-gray-300 w-12 text-base text-center font-medium focus:outline-none focus:border-primary mr-2"
+      style="appearance: textfield;"/>
+    <button data-index="${index}" class="shop-delete flex items-center justify-center h-full"><i class="fas fa-trash-alt text-red-500 text-lg"></i></button>
+  </div>
+  <div class="flex items-center gap-2">
+    <span class="text-sm text-gray-500">R$</span>
+    <input 
+      type="number"
+      min="0"
+      step="0.01"
+      value="${parseFloat(item.price).toFixed(2)}"
+      data-index="${index}"
+      class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary"
+      style="appearance: textfield;"/>
+    <span class="ml-auto font-bold text-gray-700">${formatMoney(itemTotal)}</span>
+  </div>
+  <hr class="my-2 border-gray-200">
+</div>
         `;
       } else {
         html = `
