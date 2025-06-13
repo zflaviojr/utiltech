@@ -455,8 +455,8 @@ function toggleSidebar() {
     randTimeout = setTimeout(() => {
       anim.classList.remove('animate-pulse');
 
-      anim.textContent = lastFake;
-      res.textContent  = anim.textContent;
+      res.textContent  = lastFake;
+      anim.textContent = res.textContent;
 
       // Destaque visual com animação
       anim.classList.add('highlight');
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const li = document.createElement('li');
       li.className = 'flex items-center justify-between flex-wrap gap-3 p-2 rounded bg-gray-100 dark:bg-gray-700';
       li.innerHTML = `
-        <label class="flex-1 flex items-left space-x-2">
+        <label class="flex-1 flex items-rigth space-x-2">
           <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
           <span>${item.name}</span>
         </label>
