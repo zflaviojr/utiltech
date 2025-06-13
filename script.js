@@ -16,22 +16,28 @@ if (localStorage.getItem('darkMode') === 'true') {
     document.querySelector('.sidebar').classList.toggle('-translate-x-full');
   }*/
 
+
+const isMobile = window.innerWidth < 768;
+const sideBarOn = false;
+
 function toggleSidebar() {
-  const sidebar = document.querySelector('.sidebar');
-  const isMobile = window.innerWidth < 768;
+  const sidebar = document.querySelector('.sidebar');  
 
   // Alterna visibilidade
   if (sidebar.classList.contains('-translate-x-full')) {
     sidebar.classList.remove('-translate-x-full');
+    sideBarOn = true;
 
-    // Se for mobile, fecha depois de 2 segundos
+    // Se for mobile, fecha depois de 4 segundos
     if (isMobile) {
       setTimeout(() => {
         sidebar.classList.add('-translate-x-full');
+        sideBarOn = false;
       }, 4000);
     }
   } else {
     sidebar.classList.add('-translate-x-full');
+    sideBarOn = false;
   }
 }
 
@@ -60,7 +66,7 @@ function toggleSidebar() {
     document.getElementById('main-tools').classList.add('hidden');
     document.getElementById('mosaic-container').classList.remove('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
-    //if (window.innerWidth <= 768) toggleSidebar();
+    //if (isMobile) toggleSidebar();
   }
   function showTool(id) {
     document.getElementById('landing').classList.add('hidden');
@@ -68,7 +74,7 @@ function toggleSidebar() {
     document.getElementById('main-tools').classList.add('hidden');
     document.querySelectorAll('.tool-container').forEach(el => el.classList.add('hidden'));
     document.getElementById(`${id}-container`).classList.remove('hidden');
-    //if (window.innerWidth <= 768) toggleSidebar();
+    if ((isMobile) && sideBarOn) toggleSidebar();
     window.alert(`Tamanho ${window.innerWidth}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
