@@ -2,11 +2,13 @@
 function toggleDarkMode() {
     document.documentElement.classList.toggle('dark');
     localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
-  }
-  if (localStorage.getItem('darkMode') === 'true') {
-    document.documentElement.classList.add('dark');
-    document.getElementById('dark-toggle').checked = true;
-  }
+}
+
+// Inicializa desativando o modo escuro se estiver salvo
+if (localStorage.getItem('darkMode') === 'true') {
+  document.documentElement.classList.remove('dark');
+  document.getElementById('dark-toggle').checked = false;
+}
   
   // Sidebar toggle (mobile)
   /*
@@ -14,7 +16,7 @@ function toggleDarkMode() {
     document.querySelector('.sidebar').classList.toggle('-translate-x-full');
   }*/
 
-  function toggleSidebar() {
+function toggleSidebar() {
   const sidebar = document.querySelector('.sidebar');
   const isMobile = window.innerWidth < 768;
 
