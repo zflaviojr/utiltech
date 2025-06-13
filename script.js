@@ -425,33 +425,50 @@ function toggleDarkMode() {
     const max = +document.getElementById('max-number').value;
     const qty = +document.getElementById('quantity').value;
     const t   = +document.getElementById('draw-time').value * 1000;
+
     if (min >= max) { alert('Mínimo deve ser menor que máximo'); return; }
     if (qty < 1 || qty > 20) { alert('Quantidade entre 1 e 20'); return; }
-    clearInterval(randInterval); clearTimeout(randTimeout);
+
+    clearInterval(randInterval);
+    clearTimeout(randTimeout);
+
     const anim = document.getElementById('random-draw-animation');
     const res  = document.getElementById('random-draw-result');
     const hist = document.getElementById('random-draw-history');
-    anim.textContent='...'; anim.classList.add('animate-pulse'); res.textContent='';
-    let count=0;
-    randInterval = setInterval(()=>{
-      const fake = Array.from({length:qty},()=>Math.floor(Math.random()*(max-min+1))+min).join(', ');
-      anim.textContent = fake;
+
+    anim.textContent = '...';
+    anim.classList.add('animate-pulse');
+    res.textContent = '';
+
+    let count = 0;
+    let lastFake = '';
+
+    randInterval = setInterval(() => {
+      lastFake = Array.from({ length: qty }, () => Math.floor(Math.random() * (max - min + 1)) + min).join(', ');
+      anim.textContent = lastFake;
       count += 100;
       if (count >= t) clearInterval(randInterval);
-    },100);
-    randTimeout = setTimeout(()=>{
+    }, 100);
+
+    randTimeout = setTimeout(() => {
       anim.classList.remove('animate-pulse');
-      const nums=[];
-      while (nums.length<qty){
-        const n = Math.floor(Math.random()*(max-min+1))+min;
-        if (qty>1? !nums.includes(n): true) nums.push(n);
-      }
-      anim.textContent = nums.join(qty>1?', ':'');
-      res.textContent  = nums.join(qty>1?', ':'');
+
+      anim.textContent = lastFake;
+      res.textContent  = lastFake;
+
+      // Destaque visual com animação
+      anim.classList.add('highlight');
+      setTimeout(() => anim.classList.remove('highlight'), 700);
+
       const now = new Date().toLocaleTimeString();
-      hist.innerHTML += `${now}: ${nums.join(', ')}<br/>`;
+      const entry = document.createElement('div');
+      entry.className = 'draw-history-entry';
+      entry.innerHTML = `<time>${now}</time><span>${lastFake}</span>`;
+      hist.prepend(entry);
     }, t);
+
   }
+
   
   // Initialize defaults
   document.addEventListener('DOMContentLoaded', ()=>{
