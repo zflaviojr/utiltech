@@ -655,19 +655,55 @@ document.addEventListener('DOMContentLoaded', () => {
       const itemTotal = item.price * item.qty;
       total += itemTotal;
 
+      /*
       const li = document.createElement('li');
       li.className = 'flex items-center justify-between flex-wrap gap-3 p-2 rounded bg-gray-100 dark:bg-gray-700';
       li.innerHTML = `
-        <label class="flex-1 flex items-rigth space-x-2">
+        <label class="flex-1 flex items-left space-x-2">
           <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
           <span>${item.name}</span>
-        </label>
+         </label>
         <input type="number" min="0" step="0.01" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price"/>
         <input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/>
         <span class="font-bold">${formatMoney(itemTotal)}</span>
         <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500"></i></button>
       `;
       shopListEl.appendChild(li);
+      */
+// Layout responsivo: grid com duas áreas para mobile
+      let html;
+      if (isMobile) {
+        html = `
+          <div class="flex justify-between items-center w-full">
+            <div class="flex items-center flex-shrink-0 min-w-0">
+              <input type="checkbox" data-index="${index}" class="shop-checkbox mr-2" ${item.selected ? 'checked' : ''}/>
+              <span class="font-medium truncate">${item.name}</span>
+            </div>
+            <div class="flex flex-col items-end flex-grow-0 space-y-1" style="min-width:110px;">
+              <input type="number" min="0" step="0.01" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price w-20 mb-1"/>
+              <input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty w-16 mb-1"/>
+              <span class="font-bold block">${formatMoney(itemTotal)}</span>
+              <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500"></i></button>
+            </div>
+          </div>
+        `;
+      } else {
+        html = `
+          <label class="flex-1 flex items-center space-x-2 min-w-0">
+            <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
+            <span class="font-medium truncate">${item.name}</span>
+          </label>
+          <input type="number" min="0" step="0.01" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price"/>
+          <input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/>
+          <span class="font-bold">${formatMoney(itemTotal)}</span>
+          <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500"></i></button>
+        `;
+      }
+
+      const li = document.createElement('li');
+      li.className = 'flex flex-wrap justify-between items-center gap-3 p-2 rounded bg-gray-100 dark:bg-gray-700';
+      li.innerHTML = html;
+      shopListEl.appendChild(li);     
     });
 
     shopTotalEl.textContent = `Total: ${formatMoney(total)}`;
