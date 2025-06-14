@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                     <div class="col-span-1 bg-gray-000 p-0 rounded-lg shadow-md">
-                        <p class="text-gray-600 align-vertical-center flex items-center h-[4.5rem] justify-center">
+                        <p class="text-gray-600 align-vertical-center flex items-center h-[5.0rem] justify-center">
                           <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500 text-lg"></i></button>
                         </p>
                     </div>
