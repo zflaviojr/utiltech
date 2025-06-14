@@ -253,7 +253,7 @@
     min-width: 0;
   }
   #shopping-container li .shop-delete {
-    margin-left: 0.5rem;
+    margin-left: 0px;
   }
   #shopping-container li .font-bold {
     font-size: 1.1rem;

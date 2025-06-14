@@ -674,6 +674,39 @@ document.addEventListener('DOMContentLoaded', () => {
       let html;
       if (isMobile) {
         html = `
+            <div>
+                <section class="mt-6 grid grid-cols-12 gap-0">
+                    <div class="col-span-1 bg-gray-000 p-0 rounded-lg shadow-md">
+                        <!--h3 class="font-semibold">Coluna Esquerda</h3-->
+                        <p class="text-gray-600 align-vertical-center flex items-center h-full justify-center">
+                          <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
+                        </p>
+                    </div>
+                    <!--coluna central deve ser dividida em duas colunas e a parte esquerda deve ocupar 70% da largura e a parte direita 30% da largura-->
+                    <div class="col-span-10 grid grid-cols-12 gap-0">
+                        <div class="col-span-7 bg-gray-000 p-4 rounded-lg shadow-md">
+                            <!--aqui, o conteúdo deve ser dividido em duas linhas, com texto destacado na linha superior e com menos destaque na linha inferior-->
+                            <p class="text-lg font-bold"><span class="text-base text-gray-900">${item.name}</span></p>
+                            <p class="text-gray-600">
+                              <span class="text-sm text-gray-500">R$</span>
+                              <input type="number" min="0" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" step="0.01" style="appearance: textfield;"/>
+                            </p>
+                        </div>
+                        <div class="col-span-5 bg-gray-000 p-4 rounded-lg shadow-md">
+                            <!--h3 class="font-semibold">Coluna Central Direita</h3-->
+                            <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
+                            <p class="text-gray-600"><span class="ml-auto font-bold text-gray-700">${formatMoney(itemTotal)}</span></p>
+                        </div>
+                    </div>
+                    <div class="col-span-1 bg-gray-000 p-0 rounded-lg shadow-md">
+                        <p class="text-gray-600 align-vertical-center flex items-center h-full justify-center">
+                          <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500 text-lg"></i></button>
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+<!--
 <div class="w-full py-2">
   <div class="flex items-center gap-2 mb-2">
     <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
@@ -703,6 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   <hr class="my-2 border-gray-200">
 </div>
+-->
         `;
       } else {
         html = `
