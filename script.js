@@ -686,16 +686,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="col-span-10 grid grid-cols-12 gap-0">
                         <div class="col-span-7 bg-gray-000 p-4 rounded-lg shadow-md">
                             <!--aqui, o conteúdo deve ser dividido em duas linhas, com texto destacado na linha superior e com menos destaque na linha inferior-->
-                            <p class="text-lg font-bold"><span class="text-base text-gray-900">${item.name}</span></p>
-                            <p class="text-gray-600">
-                              <span class="text-sm text-gray-500">R$</span>
+                            <p class="text-lg font-bold"><span class="text-base">${item.name}</span></p>
+                            <p>
+                              <span class="text-sm">R$</span>
                               <input type="number" min="0" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" step="0.01" style="appearance: textfield;"/>
                             </p>
                         </div>
                         <div class="col-span-5 bg-gray-000 p-4 rounded-lg shadow-md">
                             <!--h3 class="font-semibold">Coluna Central Direita</h3-->
                             <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
-                            <p class="text-gray-600 p-3"><span class="ml-auto font-bold text-gray-700">${formatMoney(itemTotal)}</span></p>
+                            <p class=" p-3"><span class="ml-auto font-bold">${formatMoney(itemTotal)}</span></p>
                         </div>
                     </div>
                     <div class="col-span-1 bg-gray-000 p-0 rounded-lg shadow-md">
