@@ -253,7 +253,12 @@
     min-width: 0;
   }
   #shopping-container li .shop-delete {
-    margin-left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    margin: 0 auto; /* Centraliza horizontalmente */    
   }
   #shopping-container li .font-bold {
     font-size: 1.1rem;
@@ -301,7 +306,7 @@
   font-size: 1.25rem;
   border: 1px solid #d1d5db;
   border-left: none;
-  border-radius: 0.5rem 0 0 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
   background-color: var(--secondary-color);
   color: white;
   display: flex;
@@ -320,7 +325,7 @@
   }
 
   #cpf-copy {
-    margin-top: 0.5rem;
+    margin-top: 1.0rem;
     border-radius: 0.5rem;
     border-left: 1px solid #d1d5db;
   }
