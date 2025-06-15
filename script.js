@@ -690,9 +690,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="p-4 flex flex-row justify-between items-start flex-nowra">
                                 <!--p class="text-gray-600"><span class="text-sm">R$</span -->
                                 <input type="number" min="0" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" step="0.01" style="appearance: textfield;"/>
-                                <!--
-                                <input type="text" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" oninput="formatCurrency(this)" />
-                                -->
                             </div>
                             <div class="p-4">
                                 <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
@@ -752,13 +749,6 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     });
   }
-
-function formatCurrency(input) {
-      let value = input.value.replace(/\D/g, ''); // Remove tudo que não for dígito
-      value = (parseInt(value, 10) / 100).toFixed(2); 
-      value = value.replace('.', ',');
-      input.value = 'R$ ' + value;
-    }
 
   incQtyBtn.onclick = () => {
     shopQtyEl.textContent = Math.max(0, parseInt(shopQtyEl.textContent) + 1);
