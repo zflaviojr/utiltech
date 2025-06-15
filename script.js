@@ -675,30 +675,31 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isMobile) {
         html = `
             <div>
-                <section class="mt-6 grid grid-cols-12 gap-0">
-                    <div class="col-span-1 bg-gray-000 p-0 rounded-lg shadow-md">
+                <section class="mt-6 grid grid-cols-12 gap-0 rounded-lg shadow-md">
+                    <div class="col-span-1 bg-gray-000 p-0">
                         <!--h3 class="font-semibold">Coluna Esquerda</h3-->
                         <p class="text-gray-600 align-vertical-center flex items-center h-full justify-center">
                           <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
                         </p>
                     </div>
-                    <!--coluna central deve ser dividida em duas colunas e a parte esquerda deve ocupar 70% da largura e a parte direita 30% da largura-->
-                    <div class="col-span-10 grid grid-cols-12 gap-0">
-                        <div class="col-span-7 bg-gray-000 p-4 rounded-lg shadow-md">
-                            <!--aqui, o conteúdo deve ser dividido em duas linhas, com texto destacado na linha superior e com menos destaque na linha inferior-->
-                            <p class="text-lg font-bold"><span class="text-base">${item.name}</span></p>
-                            <p>
-                              <span class="text-sm">R$</span>
-                              <input type="number" min="0" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" step="0.01" style="appearance: textfield;"/>
-                            </p>
-                        </div>
-                        <div class="col-span-5 bg-gray-000 p-4 rounded-lg shadow-md">
-                            <!--h3 class="font-semibold">Coluna Central Direita</h3-->
-                            <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
-                            <p class=" p-3"><span class="ml-auto font-bold">${formatMoney(itemTotal)}</span></p>
+                    <!--coluna central deve ocupar 80% da largura central -->
+                    <div class="col-span-10 bg-gray-100 p-4 rounded-lg shadow-md">
+                        <!-- dividir internamente entre duas grandes linhas, superior e inferior, onde a superior ficará um texto apenas, e na segunda linha, três colunas lado a lado-->
+                        <p class="text-lg font-bold"><span class="text-base">${item.name}</span></p>
+                        <div class="grid grid-cols-3 gap-0 items-center h-[5.5rem] justify-center">
+                            <div class="p-4 flex flex-row justify-between items-start flex-nowra">
+                                <p class="text-gray-600"><span class="text-sm">R$</span>
+                                <input type="number" min="0" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" step="0.01" style="appearance: textfield;"/>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
+                            </div>
+                            <div class="p-0">
+                                <p class="p-3"><span class=" text-lg">${formatMoney(itemTotal)}</span></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-span-1 bg-gray-000 p-0 rounded-lg shadow-md">
+                    <div class="col-span-1 bg-gray-000 p-0">
                         <p class="text-gray-600 align-vertical-center flex items-center h-[5.5rem] justify-center">
                           <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500 text-lg"></i></button>
                         </p>
