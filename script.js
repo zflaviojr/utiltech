@@ -674,11 +674,11 @@ document.addEventListener('DOMContentLoaded', () => {
       let html;
       if (isMobile) {
         html = `
-            <div class"bg-white dark:bg-gray-800 shadow-sm rounded-lg mb-4">
-                <section class="mt-6 grid grid-cols-12 gap-0 ">
+            <div class"bg-white dark:bg-gray-800 mb-4">
+                <section class="mt-6 grid grid-cols-12 gap-0">
                     <div class="col-span-1  p-0">
                         <!--h3 class="font-semibold">Coluna Esquerda</h3-->
-                        <p class="text-gray-600 align-vertical-center flex items-center h-full justify-center">
+                        <p class="align-vertical-center flex items-center h-full justify-center">
                           <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
                         </p>
                     </div>
@@ -700,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                     <div class="col-span-1 bg-gray-000 p-0">
-                        <p class="text-gray-600 align-vertical-center flex items-center h-[5.5rem] justify-center">
+                        <p class="align-vertical-center flex items-center h-[5.5rem] justify-center">
                           <button data-index="${index}" class="shop-delete"><i class="fas fa-trash-alt text-red-500 text-lg"></i></button>
                         </p>
                     </div>
@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const li = document.createElement('li');
-      li.className = 'flex flex-wrap justify-between items-center gap-3 p-2 rounded bg-gray-100 dark:bg-gray-700';
+      li.className = 'flex flex-wrap justify-between items-center gap-3 p-2 shadow-md rounded-lg border-gray-100 dark:bg-gray-500 border-gray-100';
       li.innerHTML = html;
       shopListEl.appendChild(li);     
     });
