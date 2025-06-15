@@ -695,7 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
                             </div>
                             <div class="p-0">
-                                <p class="p-3"><span class=" text-lg">${formatMoney(itemTotal)}</span></p>
+                                <p class="p-3"><span class=" text-sm font-bold">${formatMoney(itemTotal)}</span></p>
                             </div>
                         </div>
                     </div>
