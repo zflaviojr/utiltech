@@ -674,22 +674,25 @@ document.addEventListener('DOMContentLoaded', () => {
       let html;
       if (isMobile) {
         html = `
-            <div>
-                <section class="mt-6 grid grid-cols-12 gap-0 rounded-lg shadow-md">
-                    <div class="col-span-1 bg-gray-000 p-0">
+            <div class"bg-white dark:bg-gray-800 shadow-sm rounded-lg mb-4">
+                <section class="mt-6 grid grid-cols-12 gap-0 ">
+                    <div class="col-span-1  p-0">
                         <!--h3 class="font-semibold">Coluna Esquerda</h3-->
                         <p class="text-gray-600 align-vertical-center flex items-center h-full justify-center">
                           <input type="checkbox" data-index="${index}" class="shop-checkbox" ${item.selected ? 'checked' : ''}/>
                         </p>
                     </div>
                     <!--coluna central deve ocupar 80% da largura central -->
-                    <div class="col-span-10 bg-gray-100 p-4 rounded-lg shadow-md">
+                    <div class="col-span-10  p-4 ">
                         <!-- dividir internamente entre duas grandes linhas, superior e inferior, onde a superior ficará um texto apenas, e na segunda linha, três colunas lado a lado-->
                         <p class="text-lg font-bold"><span class="text-base">${item.name}</span></p>
-                        <div class="grid grid-cols-3 gap-0 items-center h-[5.5rem] justify-center">
+                        <div class="grid grid-cols-3 gap-0 items-center  justify-center">
                             <div class="p-4 flex flex-row justify-between items-start flex-nowra">
-                                <p class="text-gray-600"><span class="text-sm">R$</span>
+                                <!--p class="text-gray-600"><span class="text-sm">R$</span -->
                                 <input type="number" min="0" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" step="0.01" style="appearance: textfield;"/>
+                                <!--
+                                <input type="text" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" oninput="formatCurrency(this)" />
+                                -->
                             </div>
                             <div class="p-4">
                                 <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
@@ -726,6 +729,9 @@ document.addEventListener('DOMContentLoaded', () => {
       shopListEl.appendChild(li);     
     });
 
+    
+
+
     shopTotalEl.textContent = `Total: ${formatMoney(total)}`;
     clearSelBtn.style.visibility = shoppingData.some(it => it.selected) ? 'visible' : 'hidden';
     clearAllBtn.style.visibility = shoppingData.length ? 'visible' : 'hidden';
@@ -746,6 +752,13 @@ document.addEventListener('DOMContentLoaded', () => {
       };
     });
   }
+
+function formatCurrency(input) {
+      let value = input.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+      value = (parseInt(value, 10) / 100).toFixed(2); 
+      value = value.replace('.', ',');
+      input.value = 'R$ ' + value;
+    }
 
   incQtyBtn.onclick = () => {
     shopQtyEl.textContent = Math.max(0, parseInt(shopQtyEl.textContent) + 1);
