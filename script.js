@@ -687,15 +687,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         <!-- dividir internamente entre duas grandes linhas, superior e inferior, onde a superior ficará um texto apenas, e na segunda linha, três colunas lado a lado-->
                         <p class="text-lg font-bold"><span class="text-base">${item.name}</span></p>
                         <div class="grid grid-cols-3 gap-4 flex flex-row justify-between items-start flex-nowrap">
-                            <div class="p-4 ">
-                                <!--p class="text-gray-600"><span class="text-sm">R$</span -->
+                            <div class="py-4">
+                                <!--p class="text-gray-600"><span class="text-sm">R$</span> </p-->
                                 <input type="number" min="0" value="${parseFloat(item.price).toFixed(2)}" data-index="${index}" class="edit-price bg-transparent border-b border-gray-300 w-20 text-sm text-right focus:outline-none focus:border-primary" step="0.01" style="appearance: textfield;"/>
                             </div>
-                            <div class="p-4">
+                            <div class="py-4">
                                 <p class="text-gray-600"><input type="number" min="0" step="1" value="${item.qty}" data-index="${index}" class="edit-qty"/></p>
                             </div>
-                            <div class="p-0">
-                                <p class="p-3"><span class=" text-sm md:text-base">${formatMoney(itemTotal)}</span></p>
+                            <div class="py-4">
+                                <p class="none"><span class=" text-sm md:text-base">${formatMoney(itemTotal)}</span></p>
                             </div>
                         </div>
                     </div>
